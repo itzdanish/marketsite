@@ -92,7 +92,13 @@ const ScheduleSlot = ({route,navigation}) => {
     Booking_id:docRef.id,
   })
 })
-  navigation.navigate('BookingDone'); 
+  navigation.navigate('BookingDone',{
+    details:{
+      BookingTime:times,
+      Booking_Date:slot,
+      category_name:categoryTitle,
+    }
+  }); 
 
   } catch (error) {
     var errorMessage = error.message;

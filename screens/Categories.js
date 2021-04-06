@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 
 
-const Categories = ({navigation}) =>{
+const Categories = ({route,navigation}) =>{
 
   const renderGridItem =(itemData) => {
     return <SafeAreaView style={styles.container}><TouchableOpacity style={styles.gridItem} onPress={() => {

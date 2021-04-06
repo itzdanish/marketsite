@@ -23,9 +23,9 @@ export function ServiceSeekerStackScreen (){
      name="SelectServiceProvider" component={SelectServiceProvider}/>
     <ServiceSeekerStack.Screen options={{title:'ScheduleSlot',headerTitleAlign:'center'}}
       name="ScheduleSlot" component={ScheduleSlot}/>
-    <ServiceSeekerStack.Screen options={{title:'ScheduleSlot',headerTitleAlign:'center'}} 
+    <ServiceSeekerStack.Screen options={{title:'BookingDone',headerTitleAlign:'center'}} 
     name="BookingDone" component={BookingDone}/>
-    <ServiceSeekerStack.Screen options={{title:'Booking Done',headerTitleAlign:'center'}} 
+    <ServiceSeekerStack.Screen options={{title:'Chats',headerTitleAlign:'center'}} 
     name="Chatwindow" component={Chatwindow}/>
     <ServiceSeekerStack.Screen options={{title:'Post Ads',headerTitleAlign:'center'}}
     name="postads" component={postads}/>

@@ -6,19 +6,25 @@ function Bookingdone({route,navigation}) {
   const reg = () => {
     navigation.navigate('Categories');
   }
+
+  const category_name = route.params.details.category_name;
+  const BookingTime = route.params.details.BookingTime;
+  const Booking_Date = route.params.details.Booking_Date;
+  console.log(category_name,BookingTime,Booking_Date);
+
   return (
     <View style={styles.container}>
       <View style={styles.rect1Row}>
         <View style={styles.rect1}>
-          <Text style={styles.applianceRepair}>Appliance Repair</Text>
+          <Text style={styles.applianceRepair}>{category_name}</Text>
           <Text style={styles.byPankajKumar}>By Pankaj Kumar</Text>
           <Text style={styles.timeanddate}>
-            On Wed 10 Dec , 2020 at 2.00 pm
+            On {Booking_Date} Between {BookingTime}
           </Text>
           <Text style={styles.loremIpsum2}></Text>
           <Text style={styles.loremIpsum3}>
             300 Fixed Service Charge , additional faulty equipments charge will
-            be applied later
+            be applied later if any.
           </Text>
           <Text style={styles.loremIpsum4}>Thanks For Booking With Us!</Text>
         </View>

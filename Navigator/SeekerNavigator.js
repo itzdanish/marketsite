@@ -11,6 +11,7 @@ import ChangePassword from '../screens/ChangePassword';
 import PaymentHistory from '../screens/PaymentHistory';
 import  {MyTabs} from '../Navigator/SeekerBottomNavigator';
 import NotificationScreen from '../screens/NotificationScreen';
+import BookingDetail from '../screens/BookingDetail';
 
 const ServiceSeekerStack = createStackNavigator();
 
@@ -34,7 +35,9 @@ export function ServiceSeekerStackScreen (){
       <ServiceSeekerStack.Screen options={{title:'Payment History',headerTitleAlign:'center'}}
       name="PaymentHistory" component={PaymentHistory}/>
     <ServiceSeekerStack.Screen options={{title:'Change Password',headerTitleAlign:'center'}}
-     name="ChangePassword" component={ChangePassword}/>
+     name="ChangePassword" component={ChangePassword}/>     
+    <ServiceSeekerStack.Screen options={{title:'Booking Detail',headerTitleAlign:'center'}}
+     name="BookingDetail" component={BookingDetail}/>
   </ServiceSeekerStack.Navigator>
    )
   }

@@ -4,33 +4,38 @@ import * as firebase from 'firebase';
 import db from '../config';
 import {CATEGORIES} from '../Data/dummy-data';
 
-const renderGridItem = (itemData) =>{
-  var unixtimestamp =itemData.item.date_time.seconds;
-  // Months array
-  var months_arr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  // Convert timestamp to milliseconds
-  var date = new Date(unixtimestamp*1000);
-  // Year
-  var year = date.getFullYear();
-  // Month
-  var month = months_arr[date.getMonth()];
-  // Day
-  var day = date.getDate();
-  // Hours
-  var hours = date.getHours();
- 
-  // Minutes
-  var minutes = "0" + date.getMinutes();
- 
-  // Display date time in MM-dd-yyyy h:m:s format
-  var convdataTime = month+'-'+day+'-'+year+' at '+hours + ':' + minutes.substr(-2);
-  return <TouchableOpacity style={styles.list1}>
-        <Text style={styles.listname}>{itemData.item.category_name}</Text>
-        <Text style={styles.timeanddate}>{convdataTime}</Text>
-      </TouchableOpacity>
-}
+
 
 const Mybookings = ({navigation}) =>{
+  
+  const renderGridItem = (itemData) =>{
+    var unixtimestamp =itemData.item.date_time.seconds;
+    // Months array
+    var months_arr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    // Convert timestamp to milliseconds
+    var date = new Date(unixtimestamp*1000);
+    // Year
+    var year = date.getFullYear();
+    // Month
+    var month = months_arr[date.getMonth()];
+    // Day
+    var day = date.getDate();
+    // Hours
+    var hours = date.getHours();
+   
+    // Minutes
+    var minutes = "0" + date.getMinutes();
+   
+    // Display date time in MM-dd-yyyy h:m:s format
+    var convdataTime = month+'-'+day+'-'+year+' at '+hours + ':' + minutes.substr(-2);
+    return <TouchableOpacity style={styles.list1} onPress={() => {
+      navigation.navigate('BookingDetail');
+    }}>
+          <Text style={styles.listname}>{itemData.item.category_name}</Text>
+          <Text style={styles.timeanddate}>{convdataTime}</Text>
+        </TouchableOpacity>
+  }
+
   const result = []
   const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = useState(true);

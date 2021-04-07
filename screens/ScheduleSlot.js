@@ -135,7 +135,6 @@ const ScheduleSlot = ({route,navigation}) => {
                       <Text style={styles.ts1text}>{slot[0]}{'\n'}{slot[2]}</Text>
                       </TouchableOpacity>
                       );
-                      
                     })
                   }
                 </View>

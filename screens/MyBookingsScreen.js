@@ -1,14 +1,15 @@
-import React, { useState,useEffect } from "react";
-import { StyleSheet, RefreshControl, TouchableOpacity, Text,FlatList, SafeAreaView } from "react-native";
+import React, { useState} from "react";
+import { useFocusEffect } from '@react-navigation/native';
+import { StyleSheet, TouchableOpacity, Text,FlatList, SafeAreaView } from "react-native";
 import * as firebase from 'firebase';
 import db from '../config';
-import {CATEGORIES} from '../Data/dummy-data';
-
 
 
 const Mybookings = ({navigation}) =>{
   
   const renderGridItem = (itemData) =>{
+
+    //converting timestamp from seconds to Standard Time
     var unixtimestamp =itemData.item.date_time.seconds;
     // Months array
     var months_arr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -28,8 +29,20 @@ const Mybookings = ({navigation}) =>{
    
     // Display date time in MM-dd-yyyy h:m:s format
     var convdataTime = month+'-'+day+'-'+year+' at '+hours + ':' + minutes.substr(-2);
+    const getDetail=()=>{
+      navigation.navigate('BookingDetail',{
+        details:{
+          Booking_Time:convdataTime,
+          category_name:itemData.item.category_name,
+          BookingAddress: itemData.item.Address,
+          slotTime:itemData.item.BookingTime,
+          slotDate:itemData.item.Booking_Date,
+        }
+      });
+    }
+
     return <TouchableOpacity style={styles.list1} onPress={() => {
-      navigation.navigate('BookingDetail');
+      getDetail();
     }}>
           <Text style={styles.listname}>{itemData.item.category_name}</Text>
           <Text style={styles.timeanddate}>{convdataTime}</Text>
@@ -37,7 +50,6 @@ const Mybookings = ({navigation}) =>{
   }
 
   const result = []
-  const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState([]);
   const u_id=firebase.auth().currentUser.uid;
@@ -51,7 +63,7 @@ const Mybookings = ({navigation}) =>{
   setLoading(false);
   }
 
-  useEffect(()=>{
+  useFocusEffect(()=>{
     getBooking();
   })
 
@@ -84,7 +96,8 @@ const styles = StyleSheet.create({
     width: 143,
     fontSize: 17,
     marginTop: 6,
-    marginLeft: 11
+    marginLeft: 11,
+    fontWeight:'bold',
   },
   timeanddate: {
     color: "#121212",

@@ -1,9 +1,14 @@
-import React, { useState } from "react";
-import { TouchableOpacity, Image, ScrollView,Modal, StyleSheet, View, Text,SafeAreaView } from "react-native";
-import { RadioButton } from 'react-native-paper';
+import React from "react";
+import {   ScrollView, StyleSheet, View, Text,SafeAreaView } from "react-native";
 
-function BookingDetail(navigation) {
-    const [checked, setChecked] = React.useState('first');
+
+function BookingDetail({route}) {
+
+    const Booking_Time = route.params.details.Booking_Time;
+    const category_name=route.params.details.category_name;
+    const BookingAddress= route.params.details.BookingAddress;
+    const slotTime=route.params.details.slotTime;
+    const slotDate= route.params.details.slotDate;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -15,14 +20,17 @@ function BookingDetail(navigation) {
         <View style={styles.bordersheet} >
         <Text style={styles.bookingAmount}>Booking Amount</Text>
         <Text style={styles.bookingAmountnum}>300</Text>
+        <Text style={styles.bookingAmount}>Category Type</Text>
+        <Text style={styles.bookingAmountnum}>{category_name}</Text>
         </View>
         <View style={styles.bordersheet} >
         <Text style={styles.dateTime}>Date &amp; Time</Text>
         </View>
         <View style={styles.bordersheet} >
         <Text style={styles.bookingTime}>Booking Time</Text>
-        <Text style={styles.Date}>11 DEC 2020</Text>
-        <Text style={styles.time}>12:00 PM</Text>
+        <Text style={styles.Date}>{Booking_Time}</Text>
+        <Text style={styles.bookingTime}>Slot Date and Time</Text>
+        <Text style={styles.Date}>{slotDate} between {slotTime}</Text>
         </View>
         <View style={styles.bordersheet} >
         <Text style={styles.clientDetails}>Provider Details</Text>
@@ -31,6 +39,12 @@ function BookingDetail(navigation) {
         <Text style={styles.Name}>Name</Text>
         <Text style={styles.NameDetail}>Deepali Nikam</Text>
         </View>
+        <View style={styles.bordersheet} >
+        <Text style={styles.customerLocation}>Customer Location</Text>
+        </View> 
+        <View style={styles.bordersheet} >
+        <Text style={styles.LocationArea}>{BookingAddress}</Text>
+        </View> 
       </View>
        </ScrollView>
     </SafeAreaView>
@@ -136,14 +150,14 @@ const styles = StyleSheet.create({
   bookingTime: {
     color: "#121212",
     height: 27,
-    width: 140,
+    width: 240,
     fontSize: 18,
     marginLeft: 21,
     marginBottom:5,
   },
   Date: {
     color: "#121212",
-    width: 120,
+    width: 300,
     fontSize: 18,
     marginLeft: 23,
     marginBottom:5,

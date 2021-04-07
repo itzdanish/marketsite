@@ -10,7 +10,6 @@ function Bookingdone({route,navigation}) {
   const category_name = route.params.details.category_name;
   const BookingTime = route.params.details.BookingTime;
   const Booking_Date = route.params.details.Booking_Date;
-  console.log(category_name,BookingTime,Booking_Date);
 
   return (
     <View style={styles.container}>

@@ -41,8 +41,8 @@ function ServiceDetail(props) {
         <View style={styles.bordersheet} >
         <Text style={styles.LocationArea}>Kalyan</Text>
         <Text style={styles.LocationState}>Maharashtra</Text></View>
-        <Image style={{width:330,height:230,marginLeft:30}} source={require('../assets/images/map.png')} />
-        <Image style={{marginLeft:305, marginTop:-45}} source={require('../assets/images/mapphoto.png')} />
+        <Image style={{width:'80%',height:230,marginLeft:0,alignSelf:'center'}} source={require('../assets/images/map.png')} />
+        <Image style={{marginLeft:285, marginTop:-45}} source={require('../assets/images/mapphoto.png')} />
         <Modal
         animationType="slide"
         transparent={true}
@@ -57,7 +57,6 @@ function ServiceDetail(props) {
             <Text style={styles.modalText}>Please tell us Your Reason</Text></View>
             <View>
             <RadioButton
-            
         value="first"
         status={ checked === 'first' ? 'checked' : 'unchecked' }
         onPress={() => setChecked('first')}
@@ -81,7 +80,7 @@ function ServiceDetail(props) {
         </View>
       </Modal>
       </View>
-      <View style={{marginBottom:15}}>
+      <View style={{marginBottom:15,width:'100%'}}> 
       <TouchableOpacity style={styles.marginbutton} onPress={() => setModalVisible(true)}>
           <Text style={styles.respond} >Update Status</Text>
         </TouchableOpacity>
@@ -96,7 +95,8 @@ function ServiceDetail(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    width:'100%',
   },
   centeredView: {
     flex: 1,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
 
   },
   servicedetailbox: {
-    width: 393,
+    width: '100%',
     height: 666,
     backgroundColor: "rgba(255,255,255,1)",
     marginTop: 5
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   serviceDetail: {
     color: "#121212",
     height: 27,
-    width: 370,
+    width: "90%",
     fontSize: 18,
     marginTop: 3,
     marginLeft: 21,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   bookingAmountnum: {
     color: "#121212",
     height: 27,
-    width: 370,
+    width: '90%',
     fontSize: 18,
     marginTop: 5,
     marginLeft: 21,    

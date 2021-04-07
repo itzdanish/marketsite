@@ -4,11 +4,11 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Ellipse } from "react-native-svg";
 
-function NewLeads({navigation}) {
+const  NewLeads=({navigation})=> {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.newleadslist} onPress={() => {
-            navigation.navigate('ServiceDetails');
+            navigation.navigate('ServiceDetail');
           }}>
         <View style={styles.leadnameRow}>
           <Text style={styles.leadname}>Deepali Nikam</Text>

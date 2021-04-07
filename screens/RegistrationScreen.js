@@ -46,7 +46,7 @@ const RegistrationScreen = ({navigation}) => {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");  const [accountype,setAccountType] = useState("");
 
-  const isemailValid = text =>{
+  const isEmailValid = text =>{
     if(!checkemail(text)) return false;
     return true;
   }
@@ -172,7 +172,7 @@ const RegistrationScreen = ({navigation}) => {
       <View style={styles.downlineRow}>
         <Text style={styles.downline}>Already have an account?</Text>
         <Text style={styles.login} onPress={() => {
-            navigation.push('Login');
+            navigation.navigate('Login');
           }}>Login</Text>
       </View>
       <View style={styles.image2Stack}>

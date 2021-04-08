@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import {CATEGORIES,LISTING} from '../Data/dummy-data';
+import {CATEGORIES} from '../Data/dummy-data';
 import * as firebase from 'firebase';
 import auth from '@react-native-firebase/auth';
 import db from '../config';
@@ -9,15 +9,16 @@ import { SafeAreaView } from "react-navigation";
 
 const Selectserviceprovider = ({route,navigation}) => {
 
-const [listing, setListing] = useState("");
+const result = []
+const [listing, setListing] = useState([]);
 
   const getListing = async () => {
-    const setListing = await db.collection("listing").get().then((querySnapshot) => {
+     await db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceprovider").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
+          result.push(doc.data());
       });
   });
+  setListing(result);
   }
 
   useEffect(() => {
@@ -25,7 +26,8 @@ const [listing, setListing] = useState("");
   },[]);
 
   const renderListing = itemData =>{
-    return (       
+
+    return (   
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.ads} onPress={() => {
         navigation.navigate('ScheduleSlot',{categoryTitle:categoryTitle});
@@ -49,9 +51,9 @@ const [listing, setListing] = useState("");
         </View>
         <View style={styles.phnnoColumnRow}>
           <View style={styles.phnnoColumn}>
-            <Text style={styles.phnno}>{itemData.item.phone_no}</Text>
+            <Text style={styles.phnno}>{itemData.item.phoneno}</Text>
             <View style={styles.fixchargeStack}>
-              <Text style={styles.fixcharge}>{itemData.item.fixed_Rate} Per Service</Text>
+              <Text style={styles.fixcharge}>{itemData.item.fixedcharge} Per Service</Text>
               <Image
                 source={require("../assets/images/rupee-indian.png")}
                 resizeMode="contain"
@@ -72,13 +74,13 @@ const [listing, setListing] = useState("");
   }
 
   const CategoryId = route.params.CategoryId;
-  const selectedCategory = CATEGORIES.find(cat => cat.id === CategoryId);
+  
+  const selectedCategory = CATEGORIES.find(cat => cat.title === CategoryId);
   const categoryTitle=selectedCategory.title;
-   const displayProvider = LISTING.filter(list => list.Category_id.indexOf(CategoryId) >= 0);
-
+   const displayProvider = listing.filter(list => list.category_type.indexOf(CategoryId) >= 0);
   return (
     <View style={styles.container}>
-      <FlatList data={displayProvider} keyExtractor={(item, index) => item.id} renderItem={renderListing}>   
+      <FlatList data={displayProvider} keyExtractor={(item, index) => item.serviceprovider_id} renderItem={renderListing}>   
       </FlatList>      
       <Text style={styles.listtitle}>Showing {selectedCategory.title} Categories</Text>
     </View>

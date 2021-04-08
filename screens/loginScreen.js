@@ -123,8 +123,7 @@ const Login = ({navigation}) => {
       Keyboard.dismiss();
    } } >
      
-    <View style={styles.container}>
-    <ScrollView >
+    <ScrollView style={styles.container}>
        <View style={styles.image4Stack}>
         <Image
           source={require("../assets/images/Ellipse_1.png")}
@@ -186,8 +185,7 @@ const Login = ({navigation}) => {
       <MaterialButtonLight
         style={styles.materialButtonLight} click={UserLogin}
       ><Text style={styles.caption}>Login</Text></MaterialButtonLight>
-      </ScrollView>
-    </View></TouchableWithoutFeedback>
+    </ScrollView></TouchableWithoutFeedback>
   );
 }
 
@@ -227,8 +225,9 @@ const styles = StyleSheet.create({
     height: 45,
     width: 234,
     backgroundColor: "rgba(255,251,251,1)",
-    left: 79,
+    justifyContent:'center',
     top: 0,
+    left:78,
     color:'#b3afaf', marginTop:430,
   },
   image3: {

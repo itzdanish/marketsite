@@ -64,18 +64,18 @@ const RegistrationScreen = ({navigation}) => {
             if(selectedUser=='ServiceProvider'){              
             db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceprovider").doc(u_id).set({
               email,
-              password,
               accountype:selectedUser,
               serviceprovider_id:u_id,
               name:"",
               phoneno:"",
               dob:"",
-              category_id:"",
               finalCharge:"",
               experience:"",
               address:"",
               City:"",
-
+              idStatus:false,
+              service_Done:"0",
+              ratings:"0",
           })
         }
           else{

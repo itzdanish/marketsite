@@ -4,14 +4,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import {CATEGORIES} from '../Data/dummy-data';
 
 const postads = ({navigation}) =>{
-
   const renderGridItem =(itemData) => {
     return <TouchableOpacity style={styles.gridItem} onPress={() => {
       navigation.navigate('Tellus',{
         CategoryId: itemData.item.title
       }
     );
-    }}><View>
+    }}>
+      <View>
       <ImageBackground source={itemData.item.path} style={styles.imagesetting}></ImageBackground>
       <Text style={styles.categorytitle}>{itemData.item.title}</Text>
       </View></TouchableOpacity>

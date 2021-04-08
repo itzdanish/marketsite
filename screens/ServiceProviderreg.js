@@ -7,6 +7,7 @@ import * as firebase from 'firebase';
 import auth from '@react-native-firebase/auth';
 import db from '../config';
 import cache from '../cache';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 const Serviceproviderreg = ({navigation}) => {
@@ -120,7 +121,7 @@ const Serviceproviderreg = ({navigation}) => {
       Keyboard.dismiss();
    } } >
      <ScrollView>
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.almostDone}>Almost Done..!</Text>
       <Text style={styles.topline}>Tell us few things about you</Text>
       <Text style={styles.name}>Name</Text>
@@ -174,7 +175,7 @@ const Serviceproviderreg = ({navigation}) => {
         
       </View>
     
-      </View></ScrollView>
+      </SafeAreaView></ScrollView>
     </TouchableWithoutFeedback>
   );
 }

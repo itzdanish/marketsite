@@ -12,7 +12,7 @@ const Categories = ({route,navigation}) =>{
   const renderGridItem =(itemData) => {
     return <SafeAreaView style={styles.container}><TouchableOpacity style={styles.gridItem} onPress={() => {
       navigation.navigate('SelectServiceProvider',{
-        CategoryId: itemData.item.id
+        CategoryId: itemData.item.title
       }
     );
     }}><SafeAreaView>

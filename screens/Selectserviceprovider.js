@@ -2,35 +2,16 @@ import React, { useState,useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import {CATEGORIES} from '../Data/dummy-data';
-import * as firebase from 'firebase';
-import auth from '@react-native-firebase/auth';
 import db from '../config';
-import { SafeAreaView } from "react-navigation";
 
 const Selectserviceprovider = ({route,navigation}) => {
-
-const result = []
-const [listing, setListing] = useState([]);
-
-  const getListing = async () => {
-     await db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceprovider").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          result.push(doc.data());
-      });
-  });
-  setListing(result);
-  }
-
-  useEffect(() => {
-    getListing();
-  },[]);
 
   const renderListing = itemData =>{
 
     return (   
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity style={styles.ads} onPress={() => {
-        navigation.navigate('ScheduleSlot',{categoryTitle:categoryTitle});
+        navigation.navigate('ScheduleSlot');
       }}>
         <View style={styles.imageRow}>
           <View>
@@ -68,15 +49,32 @@ const [listing, setListing] = useState([]);
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
-     </SafeAreaView>     
+     </View>     
       );
     
   }
 
+  const result = []
+const [listing, setListing] = useState([]);
+
+  const getListing = async () => {
+     await db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceprovider").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          result.push(doc.data());
+      });
+      
+  });
+  setListing(result);
+  }
+
+  useEffect(() => {
+    getListing();
+  },[]);
+
   const CategoryId = route.params.CategoryId;
   
   const selectedCategory = CATEGORIES.find(cat => cat.title === CategoryId);
-  const categoryTitle=selectedCategory.title;
+ 
    const displayProvider = listing.filter(list => list.category_type.indexOf(CategoryId) >= 0);
   return (
     <View style={styles.container}>

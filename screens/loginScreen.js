@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Image,Text, TextInput ,ScrollView,TouchableWithoutFeedback,Keyboard,Alert,KeyboardAvoidingView} from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import {Picker} from '@react-native-picker/picker';
 import * as firebase from 'firebase';
-import auth from '@react-native-firebase/auth';
 import db from '../config';
 import cache from '../cache';
 
@@ -122,7 +121,6 @@ const Login = ({navigation}) => {
     <TouchableWithoutFeedback onPress = { () =>{
       Keyboard.dismiss();
    } } >
-     
     <ScrollView style={styles.container}>
        <View style={styles.image4Stack}>
         <Image

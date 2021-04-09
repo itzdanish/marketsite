@@ -14,7 +14,6 @@ import MaterialButtonLight from "../components/MaterialButtonLight";
 import {Picker} from '@react-native-picker/picker';
 import * as firebase from 'firebase';
 import db from "../config";
-import auth from '@react-native-firebase/app';
 
 
 const checkPassword = (str) =>
@@ -76,6 +75,7 @@ const RegistrationScreen = ({navigation}) => {
               idStatus:false,
               service_Done:"0",
               ratings:"0",
+              category_type:"",
           })
         }
           else{

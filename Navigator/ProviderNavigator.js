@@ -14,13 +14,12 @@ import NewLeads from '../screens/NewLeads';
 const ServiceProviderStack = createStackNavigator();
 
 export function ServiceProviderStackScreen (){
-
      return(
-        <ServiceProviderStack.Navigator>                  
+        <ServiceProviderStack.Navigator>  
           <ServiceProviderStack.Screen options={{headerShown:false}}
       name="ServiceProviderreg" component={ServiceProviderreg}/>
-      <ServiceProviderStack.Screen options={{headerShown:false}}
-      name="NewLead" component={MyProviderTabs}/>  
+          <ServiceProviderStack.Screen options={{headerShown:false}}
+      name="NewLead" component={MyProviderTabs}/>                     
           <ServiceProviderStack.Screen options={{headerShown:false}}
       name="providerreg" component={providerreg}/>
         <ServiceProviderStack.Screen options={{title:'Select Your Service',headerTitleAlign:'center'}}

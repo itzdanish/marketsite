@@ -6,7 +6,6 @@ import RegistrationScreen from '../screens/RegistrationScreen';
 import Changepassword from '../screens/ChangePassword';
 import {ServiceProviderStackScreen} from '../Navigator/ProviderNavigator';
 import {ServiceSeekerStackScreen} from '../Navigator/SeekerNavigator';
-import {MyProviderTabs} from '../Navigator/ProviderBottomNavigator';
 
 const Stack = createStackNavigator();
 

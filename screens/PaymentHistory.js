@@ -40,12 +40,10 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   pankajKumar: {
-    fontFamily: "roboto-700",
     color: "#121212",
     fontSize: 17
   },
   text: {
-    fontFamily: "roboto-regular",
     color: "#121212",
     marginTop: 8
   },
@@ -53,7 +51,6 @@ const styles = StyleSheet.create({
     width: 185
   },
   amount: {
-    fontFamily: "roboto-regular",
     color: "#121212"
   },
   image: {
@@ -62,7 +59,6 @@ const styles = StyleSheet.create({
     marginTop: 4
   },
   text2: {
-    fontFamily: "roboto-regular",
     color: "#121212",
     marginLeft: 2
   },

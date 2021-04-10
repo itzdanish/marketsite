@@ -9,7 +9,8 @@ function BookingDetail({route}) {
     const BookingAddress= route.params.details.BookingAddress;
     const slotTime=route.params.details.slotTime;
     const slotDate= route.params.details.slotDate;
-
+    const serviceprovidername = route.params.details.serviceprovidername;
+    
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView style={styles.scrollView}>
@@ -37,7 +38,7 @@ function BookingDetail({route}) {
         </View>
         <View style={styles.bordersheet} >      
         <Text style={styles.Name}>Name</Text>
-        <Text style={styles.NameDetail}>Deepali Nikam</Text>
+        <Text style={styles.NameDetail}>{serviceprovidername}</Text>
         </View>
         <View style={styles.bordersheet} >
         <Text style={styles.customerLocation}>Customer Location</Text>
@@ -127,6 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 5,
     marginLeft: 21,
+    fontWeight:'bold',
   },
   bookingAmountnum: {
     color: "#121212",
@@ -154,6 +156,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 21,
     marginBottom:5,
+    fontWeight:'bold',
   },
   Date: {
     color: "#121212",
@@ -184,6 +187,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 22,
     marginBottom:5,
+    fontWeight:'bold',
   },
   NameDetail: {
     color: "#121212",

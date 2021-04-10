@@ -11,7 +11,13 @@ const Selectserviceprovider = ({route,navigation}) => {
     return (   
     <View style={styles.container}>
       <TouchableOpacity style={styles.ads} onPress={() => {
-        navigation.navigate('ScheduleSlot');
+        navigation.navigate('ScheduleSlot',{
+          details:{
+            categoryTitle:selectedCategory.title,
+            serviceprovider_id:itemData.item.serviceprovider_id,
+            serviceprovider_name:itemData.item.name,
+          }
+        });
       }}>
         <View style={styles.imageRow}>
           <View>

@@ -3,7 +3,6 @@ import {View, Text, StyleSheet, TextInput, TouchableOpacity,Keyboard,  Touchable
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import {Picker} from '@react-native-picker/picker';
 import * as firebase from 'firebase';
-import auth from '@react-native-firebase/auth';
 import db from '../config';
 
 const getNextFiveDay = () => {
@@ -27,9 +26,10 @@ const ScheduleSlot = ({route,navigation}) => {
       const [slot, setSlot] = useState([]);
       const [times, settimes] = useState();
       const [address,setAddress] = useState(false);
-      const [time, setTime] = useState(""); 
-      const categoryTitle = route.params.categoryTitle;
       
+      const categoryTitle = route.params.details.categoryTitle;
+      const serviceprovider_id = route.params.details.serviceprovider_id;
+      const serviceprovider_name = route.params.details.serviceprovider_name;
       var [ isPress, setIsPress ] = React.useState(false);
 
       var touchProps = {
@@ -77,7 +77,8 @@ const ScheduleSlot = ({route,navigation}) => {
         Booking_Date: slot,
         Consumer_id: u_id,
         category_name:categoryTitle,
-        Service_Provider_id: "",
+        Service_Provider_id: serviceprovider_id,
+        serviceprovider_name:serviceprovider_name,
         service_id: "",
         date_time: firebase.firestore.Timestamp.fromDate(new Date()),
         is_completed: "",

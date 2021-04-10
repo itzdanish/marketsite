@@ -37,6 +37,7 @@ const Mybookings = ({navigation}) =>{
           BookingAddress: itemData.item.Address,
           slotTime:itemData.item.BookingTime,
           slotDate:itemData.item.Booking_Date,
+          serviceprovidername:itemData.item.serviceprovider_name,
         }
       });
     }

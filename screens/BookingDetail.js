@@ -43,7 +43,7 @@ function BookingDetail({route}) {
         <View style={styles.bordersheet} >
         <Text style={styles.customerLocation}>Customer Location</Text>
         </View> 
-        <View style={styles.bordersheet} >
+        <View style={styles.bordersheet1} >
         <Text style={styles.LocationArea}>{BookingAddress}</Text>
         </View> 
       </View>
@@ -121,6 +121,10 @@ const styles = StyleSheet.create({
         borderBottomWidth:.8,
         marginBottom:10,
         },
+  bordersheet1:{
+  borderBottomColor:'#000000',
+  marginBottom:10,
+  },
   bookingAmount: {
     color: "#121212",
     height: 27,
@@ -220,7 +224,7 @@ const styles = StyleSheet.create({
   },
   LocationArea: {
     color: "#121212",
-    width: 180,
+    width: 280,
     fontSize: 18,
     marginLeft: 22,
     

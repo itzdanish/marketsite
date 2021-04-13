@@ -61,7 +61,7 @@ const RegistrationScreen = ({navigation}) => {
             const result = await firebase.auth().createUserWithEmailAndPassword(email,password);
             let u_id=firebase.auth().currentUser.uid;
             if(selectedUser=='ServiceProvider'){              
-            db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceprovider").doc(u_id).set({
+            db.collection("serviceprovider").doc(email).set({
               email,
               accountype:selectedUser,
               serviceprovider_id:u_id,
@@ -72,14 +72,15 @@ const RegistrationScreen = ({navigation}) => {
               experience:"",
               address:"",
               City:"",
-              idStatus:false,
+              idStatus:true,
               service_Done:"0",
               ratings:"0",
               category_type:"",
+              earnings:"0"
           })
         }
           else{
-            db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceseeker").doc(u_id).set({
+            db.collection("serviceseeker").doc(email).set({
               email,
               accountype:selectedUser,
               serviceprovider_id:u_id,

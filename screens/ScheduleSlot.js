@@ -5,6 +5,7 @@ import {Picker} from '@react-native-picker/picker';
 import * as firebase from 'firebase';
 import db from '../config';
 
+let booking_id;
 const getNextFiveDay = () => {
   var today = new Date();
   const nextFiveDay = []
@@ -26,9 +27,9 @@ const ScheduleSlot = ({route,navigation}) => {
       const [slot, setSlot] = useState([]);
       const [times, settimes] = useState();
       const [address,setAddress] = useState(false);
-      
+      // const [Bookingid,setBookingid] = useState("");
       const categoryTitle = route.params.details.categoryTitle;
-      const serviceprovider_id = route.params.details.serviceprovider_id;
+      const serviceprovider_email = route.params.details.serviceprovider_email;
       const serviceprovider_name = route.params.details.serviceprovider_name;
       var [ isPress, setIsPress ] = React.useState(false);
 
@@ -54,7 +55,7 @@ const ScheduleSlot = ({route,navigation}) => {
             setSlot(bookslot);
           }
   
-  const reg = () => {
+  const reg = async() => {
     if (!address) {
       if(!isaddressValid(address)){
       setAddressIsValid(false);
@@ -69,15 +70,16 @@ const ScheduleSlot = ({route,navigation}) => {
     Alert.alert("Check Input added")
   }else{
     try {
-     const u_id=firebase.auth().currentUser.uid;   
-      db.collection("booking").doc(u_id).collection(u_id).add({
+      
+      const email=firebase.auth().currentUser.email;   
+     const docRef =  await db.collection("booking").doc(email).collection(email).add({
         Booking_id:"",
         Address:address,
         BookingTime: times,
         Booking_Date: slot,
-        Consumer_id: u_id,
+        Consumer_id: email,
         category_name:categoryTitle,
-        Service_Provider_id: serviceprovider_id,
+        Service_Provider_id: serviceprovider_email,
         serviceprovider_name:serviceprovider_name,
         service_id: "",
         date_time: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -85,19 +87,35 @@ const ScheduleSlot = ({route,navigation}) => {
         rejected_by: "",
         rating: "",
         final_charge:"",        
-    })
-    .then(function(docRef) {
-      var booking_id = docRef.id;
-         
-  db.collection("booking").doc(u_id).collection(u_id).doc(booking_id).update({
-    Booking_id:docRef.id,
-  })
+      });
+
+    booking_id = docRef.id;
+    await db.collection("booking").doc(email).collection(email).doc(booking_id).update({
+    Booking_id:booking_id});
+      
+      
+
+db.collection("service").doc(serviceprovider_email).collection(serviceprovider_email).add({
+  Booking_id:booking_id,
+  Consumer_id: email,
+  category_name:categoryTitle,
+  Service_id: "",
+  final_charge:"",        
 })
+.then(function(doc) {
+var service_id = doc.id;
+db.collection("service").doc(serviceprovider_email).collection(serviceprovider_email).doc(service_id).update({
+  Service_id:doc.id,
+
+})
+})
+
   navigation.navigate('BookingDone',{
     details:{
       BookingTime:times,
       Booking_Date:slot,
       category_name:categoryTitle,
+      serviceprovider_email:serviceprovider_email,
     }
   }); 
 

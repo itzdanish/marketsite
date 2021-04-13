@@ -53,9 +53,9 @@ const Mybookings = ({navigation}) =>{
   const result = []
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState([]);
-  const u_id=firebase.auth().currentUser.uid;
+  const email=firebase.auth().currentUser.email;
   const getBooking = async () => {
-    await db.collection("booking").doc(u_id).collection(u_id).get().then((querySnapshot) => {
+    await db.collection("booking").doc(email).collection(email).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           result.push(doc.data());
       });

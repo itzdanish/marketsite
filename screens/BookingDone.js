@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
 
-function Bookingdone({route,navigation}) {
+const Bookingdone=({route,navigation}) => {
   const reg = () => {
     navigation.navigate('Categories');
   }

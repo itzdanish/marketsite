@@ -14,7 +14,7 @@ const Selectserviceprovider = ({route,navigation}) => {
         navigation.navigate('ScheduleSlot',{
           details:{
             categoryTitle:selectedCategory.title,
-            serviceprovider_id:itemData.item.serviceprovider_id,
+            serviceprovider_email:itemData.item.email,
             serviceprovider_name:itemData.item.name,
           }
         });
@@ -64,7 +64,7 @@ const Selectserviceprovider = ({route,navigation}) => {
 const [listing, setListing] = useState([]);
 
   const getListing = async () => {
-     await db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceprovider").get().then((querySnapshot) => {
+     await db.collection("serviceprovider").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           result.push(doc.data());
       });

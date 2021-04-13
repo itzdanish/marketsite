@@ -58,8 +58,8 @@ const Tellus = ({route,navigation}) => {
           
 
           try {
-            var u_id=firebase.auth().currentUser.uid;             
-            db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceprovider").doc(u_id).update({
+            var email=firebase.auth().currentUser.email;             
+            db.collection("serviceprovider").doc(email).update({
               fixedcharge:charge,
               experience :experience, 
               category_type: CategoryId,

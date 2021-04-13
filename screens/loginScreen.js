@@ -52,11 +52,9 @@ const Login = ({navigation}) => {
     if(email || password ){
       try {
         const result = await firebase.auth().signInWithEmailAndPassword(email,password);
-        const u_id=firebase.auth().currentUser.uid;
-        console.log(u_id);      
-        
+            
          if (selectedUser == "ServiceProvider") {
-          const querySnap =  db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceprovider").doc(u_id);
+          const querySnap =  db.collection("serviceprovider").doc(email);
           querySnap.get().then(async (doc) => {
             if (doc.exists) {             
               const user = doc.data();
@@ -77,7 +75,7 @@ const Login = ({navigation}) => {
           
           
         } else {
-          const querySnap =  db.collection("users").doc("0ulhXKaKz18ESNX98JCi").collection("serviceseeker").doc(u_id);
+          const querySnap =  db.collection("serviceseeker").doc(email);
           querySnap.get().then( async (doc) => {
             if (doc.exists) {
               const user = doc.data();

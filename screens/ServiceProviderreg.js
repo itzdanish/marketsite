@@ -92,7 +92,7 @@ const Serviceproviderreg = ({navigation}) => {
       Alert.alert("Check Input added")
     }else{
       try {
-        var email=firebase.auth().currentUser.email;             
+        const email=firebase.auth().currentUser.email;             
         db.collection("serviceprovider").doc(email).update({
           phoneno:phone,
           dob:dob,

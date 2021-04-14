@@ -5,12 +5,12 @@ import { StyleSheet, View, Text, Image , FlatList} from "react-native";
 import Svg, { Ellipse } from "react-native-svg";
 import * as firebase from 'firebase';
 import db from '../config';
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const  NewLeads=({navigation})=> {
+
   const renderGridItem = (itemData) =>{
     
-    return <View style={styles.container}><TouchableOpacity style={styles.newleadslist} onPress={() => {
+    return <TouchableOpacity style={styles.newleadslist} onPress={() => {
       navigation.navigate('ServiceDetail');
     }}>
   <View style={styles.leadnameRow}>
@@ -21,8 +21,7 @@ const  NewLeads=({navigation})=> {
     <Text style={styles.location}>{itemData.item.Address}</Text>
     <Text style={styles.date}>{itemData.item.Booking_Date}</Text>
   </View>
-  
-</TouchableOpacity></View>
+</TouchableOpacity>
   };
 
   const result = [];
@@ -45,7 +44,6 @@ const  NewLeads=({navigation})=> {
       finalresult.push(querySnapshot.data());
     });
     setLead(finalresult);  
-    console.log(lead);
   });
 
   }
@@ -53,15 +51,39 @@ const  NewLeads=({navigation})=> {
   useEffect(()=>{
     getService();
   },[])
-
-
+  
   return (
-    
-      <FlatList
+    <View style={styles.container}>
+       <FlatList
     keyExtractor={(item) => item.Booking_id}
     data={lead} 
     renderItem={renderGridItem} style={{marginTop:30}}
     />
+      <TouchableOpacity >
+      <TouchableOpacity style={styles.ellipseStack} onPress={() => {
+            navigation.navigate('postads');
+          }}>
+        <Svg viewBox="0 0 100 100" style={styles.ellipse}>
+          <Ellipse
+            stroke="rgba(230, 230, 230,1)"
+            strokeWidth={0}
+            fill="rgba(255,255,255,1)"
+            cx={50}
+            cy={50}
+            rx={50}
+            ry={50}
+          ></Ellipse>
+        </Svg>
+        <Image
+          source={require("../assets/images/advertisement.png")}
+          resizeMode="contain"
+          style={styles.image}
+        ></Image>
+      </TouchableOpacity>
+        <Text style={{color:'#000000',fontWeight:'bold',fontSize:18,marginLeft:298}}>Post ads</Text>
+      </TouchableOpacity>
+    </View>
+     
     
   );
 }

@@ -1,11 +1,17 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import * as firebase from 'firebase';
+import cache from '../cache';
 import auth from '@react-native-firebase/auth';
 import config from '../config';
 
 const  MyAccountScreen = ({navigation}) => {
+
+  const [user, setUser] = useState();
+  const [email, setEmail] = useState();
+  const [phoneno, setPhoneno] = useState();
+
   const logout = () => {
     firebase.auth().signOut().then(() => {
       console.log('Signout successful');
@@ -13,6 +19,15 @@ const  MyAccountScreen = ({navigation}) => {
     }).catch((error) => {
     });
   }
+
+  const getUser = async () => {
+    const user = await cache.get('user');
+    
+    setUser(user.name);
+    setEmail(user.email);
+    setPhoneno(user.phoneno);
+  }
+  getUser();
 
   return (
     <View style={styles.container}>
@@ -24,10 +39,10 @@ const  MyAccountScreen = ({navigation}) => {
             style={styles.profilepic}
           ></Image>
           <View style={styles.profilenameColumn}>
-            <Text style={styles.profilename}>Deepali</Text>
+            <Text style={styles.profilename}>{user}</Text>
             <Text style={styles.emailandphone}>
-              {/* {firebase.auth().currentUser.email} */}deepalinikam99@gmail.com
-              {"\n"}8828086393
+              {email}
+              {"\n"}{phoneno}
             </Text>
           </View>
           <Text style={styles.editbutton}>Edit</Text>

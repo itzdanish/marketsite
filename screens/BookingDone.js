@@ -10,13 +10,14 @@ const Bookingdone=({route,navigation}) => {
   const category_name = route.params.details.category_name;
   const BookingTime = route.params.details.BookingTime;
   const Booking_Date = route.params.details.Booking_Date;
+  const Serviceprovider_name = route.params.details.serviceprovider_name;
 
   return (
     <View style={styles.container}>
       <View style={styles.rect1Row}>
         <View style={styles.rect1}>
           <Text style={styles.applianceRepair}>{category_name}</Text>
-          <Text style={styles.byPankajKumar}>By Pankaj Kumar</Text>
+          <Text style={styles.byPankajKumar}>By {Serviceprovider_name}</Text>
           <Text style={styles.timeanddate}>
             On {Booking_Date} Between {BookingTime}
           </Text>

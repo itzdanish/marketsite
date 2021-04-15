@@ -22,12 +22,6 @@ const Categories = ({navigation}) =>{
       
   }
 
-  getUser = async () => {
-    cache.get('user').then(user => console.log(user)).catch(err => console.log(err));
-    
-  }
-  getUser();
-
   return (
     <FlatList 
     keyExtractor={(item, index) => item.id}

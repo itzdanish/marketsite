@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
-const expiryInMinutes = 5;
 
 const store = async (key, value) => {
   try {
@@ -15,11 +14,7 @@ const store = async (key, value) => {
   }
 };
 
-const isExpired = (item) => {
-  const now = moment(Date.now());
-  const storedTime = moment(item.timestamp);
-  return now.diff(storedTime, "minutes") > 5;
-};
+
 
 const get = async (key) => {
   try {
@@ -27,11 +22,6 @@ const get = async (key) => {
     const item = JSON.parse(value);
 
     if (!item) return null;
-
-    if (isExpired(item)) {
-      await AsyncStorage.removeItem(key);
-      return null;
-    }
 
     return item.value;
   } catch (error) {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity, Modal ,SafeAreaView} from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
-
+import cache from '../cache';
 
 const CustomModal = ({title, modalVisible, onClose, Content}) => {
   
@@ -60,6 +60,10 @@ const RatingContent = () => {
 
 const MyAccountProviderScreen = ({navigation}) => {
 
+  const [user, setUser] = useState();
+  const [email, setEmail] = useState();
+  const [phoneno, setPhoneno] = useState();
+
   const logout = () => {
     // firebase.auth().signOut().then(() => {
     //   console.log('Signout successful');
@@ -74,10 +78,15 @@ const MyAccountProviderScreen = ({navigation}) => {
   const [modalVisible2, setModalVisible2] = useState(false);
 
 
+  const getUser = async () => {
+    const user = await cache.get('user');
+    setUser(user.name);
+    setEmail(user.email);
+    setPhoneno(user.phoneno);
 
-  const reg = () => {
-    navigation.navigate('VerifyOtp');
   }
+  getUser();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profiledetail}>
@@ -88,9 +97,11 @@ const MyAccountProviderScreen = ({navigation}) => {
             style={styles.profilepic}
           ></Image>
           <View style={styles.profilenameColumn}>
-            <Text style={styles.profilename}>Pankaj</Text>
+            <Text style={styles.profilename}>{user}</Text>
             <Text style={styles.emailandphone}>
-              8828086393
+            {email}
+              {"\n"}
+              {phoneno}
             </Text>
           </View>
           <Text style={styles.editbutton}>Edit</Text>

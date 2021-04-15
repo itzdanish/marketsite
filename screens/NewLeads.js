@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from "react";
-import { useFocusEffect } from '@react-navigation/native';
 import { TouchableOpacity } from "react-native";
 import { StyleSheet, View, Text, Image , FlatList} from "react-native";
 import Svg, { Ellipse } from "react-native-svg";
@@ -14,11 +13,11 @@ const  NewLeads=({navigation})=> {
       navigation.navigate('ServiceDetail');
     }}>
   <View style={styles.leadnameRow}>
-    <Text style={styles.leadname}>{itemData.item.Consumer_id}</Text>
+    <Text style={styles.leadname}>{itemData.item.consumer_name}</Text>
     <Text style={styles.time}>{itemData.item.BookingTime}</Text>
   </View>
   <View style={styles.locationRow}>
-    <Text style={styles.location}>{itemData.item.Address}</Text>
+    <Text style={styles.location}>{itemData.item.AddressData.area}, {itemData.item.AddressData.city}</Text>
     <Text style={styles.date}>{itemData.item.Booking_Date}</Text>
   </View>
 </TouchableOpacity>
@@ -27,31 +26,35 @@ const  NewLeads=({navigation})=> {
   const result = [];
   const finalresult = [];
 
+  const [loading, setLoading] = useState(true);
   const [Service, setService] = useState([]);
   const [lead, setLead] = useState([]);
   const email=firebase.auth().currentUser.email;
 
   const getService = async () => {
+
     await db.collection("service").doc(email).collection(email).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           result.push(doc.data());
       });
-  });  
+  }); 
+  
   setService(result);
-
+  setLoading(false);
   Service.forEach(async item =>  {
     await db.collection("booking").doc(item.Consumer_id).collection(item.Consumer_id).doc(item.Booking_id).get().then((querySnapshot) => {
       finalresult.push(querySnapshot.data());
     });
-    setLead(finalresult);  
+    setLead(finalresult);
+     
   });
-
   }
   
   useEffect(()=>{
     getService();
-  },[])
-  
+  },[loading]);
+
+  if(loading) return null
   return (
     <View style={styles.container}>
        <FlatList
@@ -59,7 +62,6 @@ const  NewLeads=({navigation})=> {
     data={lead} 
     renderItem={renderGridItem} style={{marginTop:30}}
     />
-      <TouchableOpacity >
       <TouchableOpacity style={styles.ellipseStack} onPress={() => {
             navigation.navigate('postads');
           }}>
@@ -80,8 +82,8 @@ const  NewLeads=({navigation})=> {
           style={styles.image}
         ></Image>
       </TouchableOpacity>
-        <Text style={{color:'#000000',fontWeight:'bold',fontSize:18,marginLeft:298}}>Post ads</Text>
-      </TouchableOpacity>
+      <Text style={{color:'#000000',marginTop:'165%',fontWeight:'bold',fontSize:18,marginLeft:298,position:'absolute'}}>Post ads</Text>
+        
     </View>
      
     
@@ -164,8 +166,9 @@ const styles = StyleSheet.create({
   ellipseStack: {
     width: 100,
     height: 100,
-    marginTop: 440,
-    marginLeft: 280
+    marginTop: "140%",
+    marginLeft: 280,
+    position:'absolute'
   }
 });
 

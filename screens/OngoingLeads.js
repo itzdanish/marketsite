@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgba(238,238,238,1)",
+    marginTop:30
   },
   listnames: {
     width: 393,

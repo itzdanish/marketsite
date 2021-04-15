@@ -4,6 +4,7 @@ import MaterialButtonLight from "../components/MaterialButtonLight";
 import {Picker} from '@react-native-picker/picker';
 import * as firebase from 'firebase';
 import db from '../config';
+import cache from '../cache';
 
 let booking_id;
 const getNextFiveDay = () => {
@@ -26,6 +27,10 @@ const ScheduleSlot = ({route,navigation}) => {
       
       const [slot, setSlot] = useState([]);
       const [times, settimes] = useState();
+      const [city, setCity] = useState();
+      const [area, setArea] = useState();
+      const [pincode, setPincode] = useState();
+      const [user, setUser] = useState();
       const [address,setAddress] = useState(false);
       // const [Bookingid,setBookingid] = useState("");
       const categoryTitle = route.params.details.categoryTitle;
@@ -70,14 +75,19 @@ const ScheduleSlot = ({route,navigation}) => {
     Alert.alert("Check Input added")
   }else{
     try {
-      
       const email=firebase.auth().currentUser.email;   
      const docRef =  await db.collection("booking").doc(email).collection(email).add({
         Booking_id:"",
-        Address:address,
+        AddressData:{
+          address:address,
+          area:area, 
+          city:city,
+          pincode:pincode,
+        },
         BookingTime: times,
         Booking_Date: slot,
         Consumer_id: email,
+        consumer_name: user ,
         category_name:categoryTitle,
         Service_Provider_id: serviceprovider_email,
         serviceprovider_name:serviceprovider_name,
@@ -116,6 +126,7 @@ db.collection("service").doc(serviceprovider_email).collection(serviceprovider_e
       Booking_Date:slot,
       category_name:categoryTitle,
       serviceprovider_email:serviceprovider_email,
+      serviceprovider_name:serviceprovider_name,
     }
   }); 
 
@@ -126,7 +137,13 @@ db.collection("service").doc(serviceprovider_email).collection(serviceprovider_e
   }   
   };
 
- 
+  getUser = async () => {
+    const user = await cache.get('user');
+    setUser(user.name)
+  }
+  getUser();
+
+
     return (
         <TouchableWithoutFeedback onPress = { () =>{
             Keyboard.dismiss();
@@ -134,14 +151,22 @@ db.collection("service").doc(serviceprovider_email).collection(serviceprovider_e
         <View style={styles.screen}>
             <View style={{marginTop:0,
         width:'100%',
-        height: 144, 
+        height: 229, 
         backgroundColor: '#ffffff',}}>
             <Text style={styles.address}>Address</Text>
-                <TextInput  style={styles.addressinput} multiline={true}
-        numberOfLines={2} placeholder='Enter Address'
+                <TextInput  style={styles.addressinput} placeholder='Enter Address'
         onChangeText={text => setAddress(text)}/>
-        
+                <TextInput  style={styles.addressinput} placeholder='Area or location'
+        onChangeText={text => setArea(text)}/>
+        <Picker style={{marginLeft:10, marginTop:10}} selectedValue={city} onValueChange={(itemValue,itemIndex)=>
+      setCity(itemValue)}>
+      <Picker.Item  label="Select City" value="0"/>
+      <Picker.Item label="Mumbai" value="Mumbai"/>
+      </Picker>
+      <TextInput  style={styles.addressinput} placeholder='Area or location'
+        onChangeText={text => setPincode(text)}/>
         {!addressValid && <Text style={{marginLeft:15,color:'red'}}>{addressValidationMsg}</Text>}
+        
         </View>
             <View style={{marginTop:5, paddingLeft:15, height:250,backgroundColor: '#ffffff',width:'100%',}}>
             <Text style={styles.Selectslot}>Select Slot</Text>
@@ -224,7 +249,7 @@ const styles = StyleSheet.create({
     },
     addressinput:{
         width:'90%',
-        height:80,
+        height:40,
         fontSize:18,
         borderBottomColor:'#000000',
         borderBottomWidth:.5,

@@ -80,7 +80,13 @@ const Login = ({navigation}) => {
             if (doc.exists) {
               const user = doc.data();
               cache.store('user', user);
-              navigation.navigate('Categories');
+              var name = doc.data().name;
+              console.log("Document name:", doc.data().name);
+            if (name ===""){     
+              navigation.navigate('ServiceSeekerreg');            
+                }else{           
+                  navigation.navigate('Categories');
+                }
             }else{
               Alert.alert("Invalid Account Type Selected");
               }

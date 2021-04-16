@@ -18,7 +18,6 @@ const Tellus = ({route,navigation}) => {
   const [experience,setExperience] = useState("");
 
   const CategoryId = route.params.CategoryId;
-  console.log(CategoryId);
   const ischargeValid = text =>{
     if(text.trim().length <1) return false
     else return true

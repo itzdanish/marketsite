@@ -34,7 +34,10 @@ const Mybookings = ({navigation}) =>{
         details:{
           Booking_Time:convdataTime,
           category_name:itemData.item.category_name,
-          BookingAddress: itemData.item.Address,
+          BookingAddress: itemData.item.AddressData.address,
+          BookingArea: itemData.item.AddressData.area,
+          BookingCity:itemData.item.AddressData.city,
+          BookingPincode:itemData.item.AddressData.pincode,
           slotTime:itemData.item.BookingTime,
           slotDate:itemData.item.Booking_Date,
           serviceprovidername:itemData.item.serviceprovider_name,

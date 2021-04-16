@@ -1,12 +1,15 @@
 import React from "react";
-import {   ScrollView, StyleSheet, View, Text,SafeAreaView } from "react-native";
+import {TouchableOpacity, ScrollView, StyleSheet, View, Text,SafeAreaView } from "react-native";
 
 
 function BookingDetail({route}) {
-
+  
     const Booking_Time = route.params.details.Booking_Time;
     const category_name=route.params.details.category_name;
     const BookingAddress= route.params.details.BookingAddress;
+    const BookingArea= route.params.details.BookingArea;
+    const BookingCity= route.params.details.BookingCity;
+    const BookingPincode= route.params.details.BookingPincode;
     const slotTime=route.params.details.slotTime;
     const slotDate= route.params.details.slotDate;
     const serviceprovidername = route.params.details.serviceprovidername;
@@ -45,7 +48,12 @@ function BookingDetail({route}) {
         </View> 
         <View style={styles.bordersheet1} >
         <Text style={styles.LocationArea}>{BookingAddress}</Text>
+        <Text style={styles.LocationArea}>{BookingArea}</Text>
+        <Text style={styles.LocationState}>{BookingCity} {BookingPincode}</Text>
         </View> 
+        <TouchableOpacity style={styles.marginbutton} onPress={()=>{console.log("hii")}}>
+          <Text style={styles.respond} >Cancel Job </Text>
+        </TouchableOpacity>
       </View>
        </ScrollView>
     </SafeAreaView>
@@ -241,16 +249,8 @@ const styles = StyleSheet.create({
     height: 48,
     backgroundColor: "#C4C4C4",
     borderRadius: 100,
-    marginTop: 133,
-    marginLeft: 23,
-  },
-  marginbutton2: {
-    width: 170,
-    height: 48,
-    backgroundColor: "#C4C4C4",
-    borderRadius: 100,
-    marginTop:-47,
-    marginLeft: 210,
+    marginBottom: 10,
+    alignSelf:'center',
   },
   respond: {
     color: "#FFFFFF",
@@ -258,24 +258,9 @@ const styles = StyleSheet.create({
     width: 122,
     fontSize: 18,
     marginTop: 12,
-    margin:30
+    margin:30,
+    textAlign:'center'
   },
-  respond1: {
-    color: "#FFFFFF",
-    fontWeight:'bold',
-    width: 122,
-    fontSize: 18,
-    marginTop: 12,
-    margin:50
-  },
-  respond2:{
-    color: "#FFFFFF",
-    fontWeight:'bold',
-    height: 20,
-    width: 102,
-    fontSize: 16,
-    marginLeft: 67
-  }
 });
 
 export default BookingDetail;

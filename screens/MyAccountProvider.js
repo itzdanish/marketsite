@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity, Modal ,SafeAreaView} from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import cache from '../cache';
+import * as firebase from 'firebase';
 
 const CustomModal = ({title, modalVisible, onClose, Content}) => {
   
@@ -10,21 +11,19 @@ const CustomModal = ({title, modalVisible, onClose, Content}) => {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <TouchableOpacity onPress={onClose}>
           <View style={{marginLeft:-20,borderBottomColor:'#000000',
         borderBottomWidth:.3,
         marginBottom:5,}}>
-          <TouchableOpacity onPress={onClose}>
           <Image style={{width:10,height:10, marginLeft:280,marginTop:-8}}
             source={require("../assets/images/cancel.png")}
             resizeMode="contain"
-          ></Image></TouchableOpacity>
-            <Text style={styles.modalText}>{title}</Text></View>
+          ></Image>
+            <Text style={styles.modalText}>{title}</Text></View></TouchableOpacity>
               <Content />
-
           </View>
         </View>
       </Modal>
@@ -48,8 +47,7 @@ const RatingContent = () => {
   return(
   <View>
             
-            <Text style={{fontSize:54,marginLeft:6, marginBottom:7}}>5400</Text>
-            <Image style={{width:100,height:28,marginTop:-20,marginLeft:8}}
+            <Image style={{width:100,height:28,marginTop:10,marginLeft:8}}
             source={require("../assets/images/rating.png")}
             resizeMode="contain"
           ></Image>
@@ -63,15 +61,14 @@ const MyAccountProviderScreen = ({navigation}) => {
   const [user, setUser] = useState();
   const [email, setEmail] = useState();
   const [phoneno, setPhoneno] = useState();
+  const [earning, setEarning] = useState();
+  const [rating, setRating] = useState();
 
   const logout = () => {
-    // firebase.auth().signOut().then(() => {
-    //   console.log('Signout successful');
-    //   navigation.navigate('Login');
-    // }).catch((error) => {
-    //   // An error happened.
-    // });
-    navigation.navigate('Login');
+    firebase.auth().signOut().then(() => {
+      navigation.navigate('Login');
+    }).catch((error) => {
+    });
   }
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -83,7 +80,8 @@ const MyAccountProviderScreen = ({navigation}) => {
     setUser(user.name);
     setEmail(user.email);
     setPhoneno(user.phoneno);
-
+    setEarning(user.earnings);
+    setRating(user.ratings);
   }
   getUser();
 

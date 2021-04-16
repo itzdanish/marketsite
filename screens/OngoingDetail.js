@@ -4,7 +4,7 @@ import { RadioButton } from 'react-native-paper';
 import * as firebase from 'firebase';
 import db from '../config';
 
-function ServiceDetail({route}) {
+function OngoingDetail({route}) {
     const [modalVisible, setModalVisible] = useState(false);
     const [checked, setChecked] = React.useState('first');
 
@@ -30,7 +30,6 @@ function ServiceDetail({route}) {
 
   const jobCancel =()=>{
     db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
-      jobStatus:'cancelled',
       rejectionReason:checked,
       rejected_by:email
     })
@@ -344,4 +343,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ServiceDetail;
+export default OngoingDetail;

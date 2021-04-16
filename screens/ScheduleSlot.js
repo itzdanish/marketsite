@@ -94,9 +94,12 @@ const ScheduleSlot = ({route,navigation}) => {
         service_id: "",
         date_time: firebase.firestore.Timestamp.fromDate(new Date()),
         is_completed: "",
+        rejectionReason:"",
         rejected_by: "",
         rating: "",
-        final_charge:"",        
+        jobStatus:"",
+        final_charge:"",   
+        review:"",     
       });
 
     booking_id = docRef.id;

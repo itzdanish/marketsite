@@ -8,9 +8,43 @@ import db from '../config';
 const  NewLeads=({navigation})=> {
 
   const renderGridItem = (itemData) =>{
+    //converting timestamp from seconds to Standard Time
+    var unixtimestamp =itemData.item.date_time.seconds;
+    // Months array
+    var months_arr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    // Convert timestamp to milliseconds
+    var date = new Date(unixtimestamp*1000);
+    // Year
+    var year = date.getFullYear();
+    // Month
+    var month = months_arr[date.getMonth()];
+    // Day
+    var day = date.getDate();
+    // Hours
+    var hours = date.getHours();
+   
+    // Minutes
+    var minutes = "0" + date.getMinutes();
+   
+    // Display date time in MM-dd-yyyy h:m:s format
+    var convdataTime = month+'-'+day+'-'+year+' at '+hours + ':' + minutes.substr(-2);
     
     return <TouchableOpacity style={styles.newleadslist} onPress={() => {
-      navigation.navigate('ServiceDetail');
+      navigation.navigate('ServiceDetail',{
+        details:{
+          BookingTime:convdataTime,
+          CategoryName:itemData.item.category_name,
+          BookingAddress: itemData.item.AddressData.address,
+          BookingArea: itemData.item.AddressData.area,
+          BookingCity:itemData.item.AddressData.city,
+          BookingPincode:itemData.item.AddressData.pincode,
+          SlotTime:itemData.item.BookingTime,
+          SlotDate:itemData.item.Booking_Date,
+          ConsumerName:itemData.item.consumer_name,
+          Booking_id:itemData.item.Booking_id,
+          Consumer_id:itemData.item.Consumer_id,
+        }
+      });
     }}>
   <View style={styles.leadnameRow}>
     <Text style={styles.leadname}>{itemData.item.consumer_name}</Text>
@@ -54,6 +88,7 @@ const  NewLeads=({navigation})=> {
     getService();
   },[loading]);
 
+  
   if(loading) return null
   return (
     <View style={styles.container}>

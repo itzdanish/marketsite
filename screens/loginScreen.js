@@ -9,13 +9,13 @@ import cache from '../cache';
 const checkPassword = (str) =>
 {
     var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    return re.test(str);
+    return re.test(str)
 }
 
 const checkemail = (str) =>
 {
   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(str);
+    return re.test(str)
 }
 
 const Login = ({navigation}) => {
@@ -27,14 +27,14 @@ const Login = ({navigation}) => {
 
      const [selectedUser, setSelectedUser] = useState();
 
-  const [emailValid,setemailIsValid] = useState(false);
-  const [emailValidationMsg, setemailValidationMsg] = useState("");
-  const [passwordValidationMsg, setPasswordValidationMsg] = useState("");
-  const [passwordIsValid,setPasswordIsValid] = useState(false);
-  const [isSecureEntry,setIsSecureEntry] = useState(true);
+  const [emailValid,setemailIsValid] = useState(false)
+  const [emailValidationMsg, setemailValidationMsg] = useState("")
+  const [passwordValidationMsg, setPasswordValidationMsg] = useState("")
+  const [passwordIsValid,setPasswordIsValid] = useState(false)
+  const [isSecureEntry,setIsSecureEntry] = useState(true)
 
-  const [email, setemail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setemail] = useState("")
+  const [password, setPassword] = useState("")
 
   const isemailValid = text =>{
     if(!checkemail(text)) return false;
@@ -58,63 +58,62 @@ const Login = ({navigation}) => {
           querySnap.get().then(async (doc) => {
             if (doc.exists) {             
               const user = doc.data();
-              cache.store('user', user);
-              console.log("user",user);                       
-                    var name = doc.data().name;
-                    console.log("Document name:", doc.data().name);
+              cache.store('user', user)                    
+                    var name = doc.data().name
+                    console.log("Document name:", doc.data().name)
                   if (name ===""){     
-                    navigation.navigate('ServiceProviderreg');            
+                    navigation.navigate('ServiceProviderreg')            
                       }else{           
-                      navigation.navigate('NewLead'); 
+                      navigation.navigate('NewLead')
                   }
             }else{
-              Alert.alert("Invalid Account Type Selected");
+              Alert.alert("Invalid Account Type Selected")
             }
           });
           //var myTimestamp = firebase.firestore.Timestamp.fromDate(new Date());
           
           
         } else {
-          const querySnap =  db.collection("serviceseeker").doc(email);
+          const querySnap =  db.collection("serviceseeker").doc(email)
           querySnap.get().then( async (doc) => {
             if (doc.exists) {
-              const user = doc.data();
-              cache.store('user', user);
-              var name = doc.data().name;
-              console.log("Document name:", doc.data().name);
+              const user = doc.data()
+              cache.store('user', user)
+              var name = doc.data().name
+              console.log("Document name:", doc.data().name)
             if (name ===""){     
-              navigation.navigate('ServiceSeekerreg');            
+              navigation.navigate('ServiceSeekerreg')           
                 }else{           
-                  navigation.navigate('Categories');
+                  navigation.navigate('Categories')
                 }
             }else{
-              Alert.alert("Invalid Account Type Selected");
+              Alert.alert("Invalid Account Type Selected")
               }
         });
         
         
       }
       } catch (error) {
-        var errorMessage = error.message;
-        Alert.alert(errorMessage);
+        var errorMessage = error.message
+        Alert.alert(errorMessage)
       }
     }else{
       if(!isemailValid(email)){
-        setemailIsValid(false);
-        setemailValidationMsg("Please enter a valid email address");
+        setemailIsValid(false)
+        setemailValidationMsg("Please enter a valid email address")
     }
       else {
-        setemailValidationMsg("");
-        setemailIsValid(true);      
+        setemailValidationMsg("")
+        setemailIsValid(true)
         
       }
       if(!isPasswordvalid(password)){
         setPasswordIsValid(false);
-        setPasswordValidationMsg("Must be 6 Char long and use combinations");
+        setPasswordValidationMsg("Must be 6 Char long and use combinations")
     }
       else {
-        setPasswordValidationMsg("");
-        setPasswordIsValid(true);
+        setPasswordValidationMsg("")
+        setPasswordIsValid(true)
         
       }
     }
@@ -196,14 +195,15 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 0,
     borderColor: "rgba(235,223,223,1)",
-    backgroundColor: "rgba(255,255,255,1)"
+    backgroundColor: "rgba(255,255,255,1)",
+    width:'100%',
   },
   image: {
-    width: 200,
+    width: '60%',
     height: 200
   },
   image2: {
-    width: 126,
+    width: "40%",
     height: 117,
     marginTop: 41
   },
@@ -217,20 +217,21 @@ const styles = StyleSheet.create({
   emailNumber: {
     color: "#121212",
     height: 45,
-    width: 234,
+    width: "60%",
     backgroundColor: "rgba(255,251,251,0.74)",
     marginTop: 23,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   accounttype: {
     position: "absolute",
     height: 45,
-    width: 234,
+    width: "60%",
     backgroundColor: "rgba(255,251,251,1)",
-    justifyContent:'center',
+    alignContent:'center',
     top: 0,
     left:78,
-    color:'#b3afaf', marginTop:430,
+    color:'#b3afaf',
+     marginTop:430,
   },
   image3: {
     top: 19,
@@ -247,14 +248,14 @@ const styles = StyleSheet.create({
   password: {
     color: "#121212",
     height: 45,
-    width: 234,
+    width: "60%",
     backgroundColor: "rgba(255,251,251,1)",
     marginTop: 5,
     alignSelf: "center"
   },
   materialButtonLight: {
     height: 40,
-    width: 223,
+    width: "60%",
     borderRadius: 20,
     marginTop: 14,
     marginLeft: 85

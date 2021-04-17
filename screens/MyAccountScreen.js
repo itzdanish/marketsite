@@ -8,24 +8,24 @@ import config from '../config';
 
 const  MyAccountScreen = ({navigation}) => {
 
-  const [user, setUser] = useState();
-  const [email, setEmail] = useState();
-  const [phoneno, setPhoneno] = useState();
+  const [user, setUser] = useState()
+  const [email, setEmail] = useState()
+  const [phoneno, setPhoneno] = useState()
 
   const logout = () => {
     firebase.auth().signOut().then(() => {
-      console.log('Signout successful');
-      navigation.navigate('Login');
+      console.log('Signout successful')
+      navigation.navigate('Login')
     }).catch((error) => {
-    });
+    })
   }
 
   const getUser = async () => {
-    const user = await cache.get('user');
+    const user = await cache.get('user')
     
-    setUser(user.name);
-    setEmail(user.email);
-    setPhoneno(user.phoneno);
+    setUser(user.name)
+    setEmail(user.email)
+    setPhoneno(user.phoneno)
   }
   getUser();
 

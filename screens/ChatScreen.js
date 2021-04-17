@@ -23,7 +23,7 @@ const ChatScreen = ({navigation}) =>{
           numberOfLines={1}>
       </TextInput>
       <TouchableOpacity style={styles.list1} onPress={() => {
-        navigation.push('ChatWindow');
+        navigation.navigate('Chatwindow');
       }}>
         <View style={styles.profilepicRow} >
           <Image

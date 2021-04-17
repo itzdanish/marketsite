@@ -3,11 +3,11 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import {CATEGORIES} from '../Data/dummy-data';
 import db from '../config';
+import { FontAwesome } from '@expo/vector-icons';
 
 const Selectserviceprovider = ({route,navigation}) => {
 
   const renderListing = itemData =>{
-
     return (   
     <View style={styles.container}>
       <TouchableOpacity style={styles.ads} onPress={() => {
@@ -28,11 +28,7 @@ const Selectserviceprovider = ({route,navigation}) => {
           ></Image></View>
           <View style={styles.adpersonnameStack}>
             <Text style={styles.adpersonname}>{itemData.item.name}</Text>
-            <Image
-              source={require("../assets/images/rating.png")}
-              resizeMode="contain"
-              style={styles.image2}
-            ></Image>
+            <CustomRatingBar/>
           </View>
           <Text style={styles.servicecount}>{itemData.item.service_Done} Service Done</Text>
         </View>
@@ -62,6 +58,25 @@ const Selectserviceprovider = ({route,navigation}) => {
 
   const result = []
 const [listing, setListing] = useState([]);
+const [rating, setRating] = useState(3);
+const [maxRating,setmaxrating] = useState([1,2,3,4,5]);
+
+ const starImgFilled =  require('../assets/images/star_filled.png');
+ const starImgCorner =  require('../assets/images/star_corner.png');
+
+const CustomRatingBar =()=>{
+  return(
+    <View style={{flexDirection:'row'}}>
+      {
+        maxRating.map((item)=>{
+            return(
+              <Image key={item} style={styles.image2} source={item = rating ? starImgCorner : starImgFilled}/>
+            )
+        })
+      }
+    </View>
+  )
+}
 
   const getListing = async () => {
      await db.collection("serviceprovider").get().then((querySnapshot) => {
@@ -123,11 +138,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   image2: {
-    top: 21,
+    top: 32,
     left: 0,
-    width: 105,
-    height: 35,
-    position: "absolute"
+    width:25,
+    height:25,
   },
   adpersonnameStack: {
     width: 200,

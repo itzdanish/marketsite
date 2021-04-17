@@ -1,10 +1,9 @@
 import React, { useState,useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 import { StyleSheet, View, Text, Image , FlatList} from "react-native";
+import Svg, { Ellipse } from "react-native-svg";
 import * as firebase from 'firebase';
 import db from '../config';
-import 'firebase/firestore';
-import { List } from "react-native-paper";
 
 const  OngoingLeads=({navigation})=> {
 
@@ -30,7 +29,8 @@ const  OngoingLeads=({navigation})=> {
     // Display date time in MM-dd-yyyy h:m:s format
     var convdataTime = month+'-'+day+'-'+year+' at '+hours + ':' + minutes.substr(-2);
     
-    return <TouchableOpacity style={styles.newleadslist} onPress={() => {
+    return <View style={styles.container}>
+    <TouchableOpacity style={styles.newleadslist} onPress={() => {
       navigation.navigate('ServiceDetail',{
         details:{
           BookingTime:convdataTime,
@@ -55,20 +55,27 @@ const  OngoingLeads=({navigation})=> {
     <Text style={styles.location}>{itemData.item.AddressData.area}, {itemData.item.AddressData.city}</Text>
     <Text style={styles.date}>{itemData.item.Booking_Date}</Text>
   </View>
-  <Text style={styles.jobEnded}>Job Ended</Text>
-</TouchableOpacity>
+  <Text style={{
+    color: "green",
+    height: 30,
+    width: 130,
+    fontSize: 18,
+    marginTop: 5,
+    marginLeft: 21
+  }}>{itemData.item.jobStatus}</Text>
+</TouchableOpacity></View>
   };
 
   const result = [];
   const finalresult = [];
+
   const [loading, setLoading] = useState(true);
   const [Service, setService] = useState([]);
   const [lead, setLead] = useState([]);
   const email=firebase.auth().currentUser.email;
-  
+
   const getService = async () => {
-    
-    setLoading(true);
+
     await db.collection("service").doc(email).collection(email).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           result.push(doc.data());
@@ -76,42 +83,29 @@ const  OngoingLeads=({navigation})=> {
   }); 
   
   setService(result);
-  const temp_data = [];
-  
-  Service.forEach(async item =>  {
-    const querySnapshot = await db.collection("booking").doc(item.Consumer_id).collection(item.Consumer_id).doc(item.Booking_id).get();
-    temp_data.push(querySnapshot.data());
-    
-  });
-  setLead(temp_data);
-  // temp_data.filter(item => item.jobStatus == "accepted");
-  // console.log(temp_data);
-}
-
-const loadServices = async () => {
-  await getService();
-  const filteredData = lead.filter(item => item.jobStatus == "accepted");
-  setLead(filteredData);
   setLoading(false);
-}
+  Service.forEach(async item =>  {
+    await db.collection("booking").doc(item.Consumer_id).collection(item.Consumer_id).doc(item.Booking_id).get().then((querySnapshot) => {
+      finalresult.push(querySnapshot.data());
+    });
+    setLead(finalresult);
+     
+  });
+  }
   
   useEffect(()=>{
-    loadServices();
-    console.log(1);
+    getService();
+  },[loading]);
 
-  },[]);
-
-  if(loading) return null;
-
+  
+  if(loading) return null
   return (
-    <View style={styles.container}>
-       <FlatList
-    keyExtractor={(item) => item.Booking_id}
-    data={lead} 
-    renderItem={renderGridItem} style={{marginTop:30}}
-    />
-    </View>
-
+            <FlatList
+        keyExtractor={(item) => item.Booking_id}
+        data={lead} 
+        renderItem={renderGridItem} style={{marginTop:30}}
+        />
+    
   );
 }
 
@@ -124,7 +118,7 @@ const styles = StyleSheet.create({
   },
   newleadslist: {
     width: 393,
-    height: 120,
+    height: 110,
     backgroundColor: "rgba(255,255,255,1)",
     marginTop: 0,
     width:"100%",
@@ -194,14 +188,6 @@ const styles = StyleSheet.create({
     marginTop: "140%",
     marginLeft: 280,
     position:'absolute'
-  },
-  jobEnded: {
-    color: "#121212",
-    height: 30,
-    width: 130,
-    fontSize: 18,
-    marginTop: 15,
-    marginLeft: 21
   }
 });
 

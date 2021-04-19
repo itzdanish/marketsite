@@ -32,10 +32,8 @@ const ChatScreen = ({navigation}) =>{
             style={styles.profilepic}
           ></Image>
           <View style={styles.pankajKumarColumn}>
-            <Text style={styles.pankajKumar}>Pankaj Kumar</Text>
-            <Text style={styles.lastmsg}>
-              Okay, i’ll arrive at 9.00 pm tomo...
-            </Text>
+            <Text style={styles.pankajKumar}>Rahul Shashtri</Text>
+            <Text style={styles.lastmsg}>ok! i will be there by 11:AM</Text>
           </View>
           <Text style={styles.timeordate}>7.30 pm</Text>
         </View>
@@ -73,7 +71,8 @@ const styles = StyleSheet.create({
   pankajKumar: {
     color: "#121212",
     lineHeight: 18,
-    marginLeft: 1
+    marginLeft: 1,
+    fontSize:18
   },
   lastmsg: {
     color: "#121212",

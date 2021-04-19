@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import {CATEGORIES} from '../Data/dummy-data';
 import db from '../config';
-import { FontAwesome } from '@expo/vector-icons';
 
 const Selectserviceprovider = ({route,navigation}) => {
 
@@ -22,7 +21,7 @@ const Selectserviceprovider = ({route,navigation}) => {
         <View style={styles.imageRow}>
           <View>
           <Image
-            source={itemData.item.path}
+            source={require('../assets/images/profile_pic/rajatjadhav.jpg')}
             resizeMode="contain"
             style={styles.image}
           ></Image></View>
@@ -45,7 +44,7 @@ const Selectserviceprovider = ({route,navigation}) => {
             </View>
           </View>
           <TouchableOpacity style={styles.chatbutton} onPress={() => {
-        navigation.navigate('ChatScreen');
+        navigation.navigate('Chatwindow');
       }}>
             <Text style={styles.chat}>Chat</Text>
           </TouchableOpacity>
@@ -56,7 +55,7 @@ const Selectserviceprovider = ({route,navigation}) => {
     
   }
 
-  const result = []
+  const result = [];
 const [listing, setListing] = useState([]);
 const [rating, setRating] = useState(3);
 const [maxRating,setmaxrating] = useState([1,2,3,4,5]);
@@ -128,7 +127,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 39,
-    height: 45
+    height: 45,marginTop:20
+
   },
   adpersonname: {
     top: 0,

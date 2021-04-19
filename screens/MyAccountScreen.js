@@ -3,14 +3,14 @@ import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import * as firebase from 'firebase';
 import cache from '../cache';
-import auth from '@react-native-firebase/auth';
-import config from '../config';
 
 const  MyAccountScreen = ({navigation}) => {
 
   const [user, setUser] = useState()
   const [email, setEmail] = useState()
-  const [phoneno, setPhoneno] = useState()
+  const [phoneno, setPhoneno] = useState()  
+  const [image, setImage] = useState()
+
 
   const logout = () => {
     firebase.auth().signOut().then(() => {
@@ -26,15 +26,19 @@ const  MyAccountScreen = ({navigation}) => {
     setUser(user.name)
     setEmail(user.email)
     setPhoneno(user.phoneno)
+    setImage(user.image)
+
   }
   getUser();
+  
 
+  var images = '../assets/images/profile_pic/danishkhan.jpg';
   return (
     <View style={styles.container}>
       <View style={styles.profiledetail}>
         <View style={styles.profilepicRow}>
           <Image
-            source={require("../assets/images/user.png")}
+            source={require(images)}
             resizeMode="contain"
             style={styles.profilepic}
           ></Image>
@@ -45,7 +49,6 @@ const  MyAccountScreen = ({navigation}) => {
               {"\n"}{phoneno}
             </Text>
           </View>
-          <Text style={styles.editbutton}>Edit</Text>
         </View>
       </View>
       <TouchableOpacity style={styles.notificationtab} onPress={() => {
@@ -111,8 +114,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   profilepic: {
-    width: 58,
-    height: 58
+    width: 78,
+    height: 58,
+    borderRadius: 80,
   },
   profilename: {
     color: '#000000',
@@ -141,7 +145,7 @@ const styles = StyleSheet.create({
     height: 58,
     flexDirection: "row",
     marginTop: 21,
-    marginLeft: 26,
+    marginLeft: 5,
     marginRight: 14
   },
   notificationtab: {

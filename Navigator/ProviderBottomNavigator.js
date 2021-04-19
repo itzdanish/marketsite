@@ -36,7 +36,7 @@ export function MyProviderTabs  (){
         <MaterialCommunityIcons name="chat-processing-outline" size={32} color="black" />
         ),
       }}/>
-      <Tab1.Screen name="MyBookings" component={OngoingLeads} options={{
+      <Tab1.Screen name="OngoingLeads" component={OngoingLeads} options={{
         tabBarLabel:(tabInfo)=>{
             return<View>
                 <Text style={{fontSize:12,textAlign:'center',marginLeft:-10,width:120}}>Ongoing Leads</Text>

@@ -166,7 +166,7 @@ db.collection("service").doc(serviceprovider_email).collection(serviceprovider_e
       <Picker.Item  label="Select City" value="0"/>
       <Picker.Item label="Mumbai" value="Mumbai"/>
       </Picker>
-      <TextInput  style={styles.addressinput} placeholder='Area or location'
+      <TextInput  style={styles.addressinput} placeholder='Enter Pincode'
         onChangeText={text => setPincode(text)}/>
         {!addressValid && <Text style={{marginLeft:15,color:'red'}}>{addressValidationMsg}</Text>}
         

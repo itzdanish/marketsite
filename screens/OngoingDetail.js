@@ -4,10 +4,10 @@ import { RadioButton } from 'react-native-paper';
 import * as firebase from 'firebase';
 import db from '../config';
 
-function OngoingDetail({route}) {
+function OngoingDetail({route,navigation}) {
     const [modalVisible, setModalVisible] = useState(false);
-    const [checked, setChecked] = React.useState('first');
-
+    const [checked, setChecked] = React.useState('');
+    
     const Booking_Time = route.params.details.Booking_Time;
     const CategoryName= route.params.details.CategoryName;
     const BookingAddress= route.params.details.BookingAddress;
@@ -19,22 +19,34 @@ function OngoingDetail({route}) {
     const ConsumerName = route.params.details.ConsumerName;
     const Booking_id =route.params.details.Booking_id;
     const Consumer_id = route.params.details.Consumer_id;
+    var job_Status = route.params.details.job_Status;
+   
+  
     const email=firebase.auth().currentUser.email;
 
   const jobStatus = ()=>{
-    db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
-      jobStatus:"accepted"
-    })  
+    if (job_Status=="job Started") {
+      db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
+        jobStatus:"Job Started"
+      })  
+    } else {
+      db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
+        jobStatus:"Job Ended"
+      })  
+    }    
     Alert.alert("Job Status Updated");
+    navigation.navigate('OngoingLeads')
   }
 
   const jobCancel =()=>{
     db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
       rejectionReason:checked,
-      rejected_by:email
+      rejected_by:email,
+      jobStatus:"Job Cancelled"
     })
     setModalVisible(!modalVisible);
     Alert.alert("Job Cancelled");
+    
   }
 
   return (
@@ -116,7 +128,7 @@ function OngoingDetail({route}) {
           <Text style={styles.respond} >Reject Job </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.marginbutton2} onPress={() => jobStatus()}>
-          <Text style={styles.respond1} >Accept Job</Text>
+          <Text style={styles.respond1} >{job_Status=="Job Started"? "End job": "Start job"}</Text>
         </TouchableOpacity></View>
        </ScrollView>
     </SafeAreaView>

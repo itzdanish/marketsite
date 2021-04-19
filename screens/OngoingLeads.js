@@ -31,7 +31,7 @@ const  OngoingLeads=({navigation})=> {
     
     return <View style={styles.container}>
     <TouchableOpacity style={styles.newleadslist} onPress={() => {
-      navigation.navigate('ServiceDetail',{
+      navigation.navigate('OngoingDetail',{
         details:{
           BookingTime:convdataTime,
           CategoryName:itemData.item.category_name,
@@ -44,6 +44,7 @@ const  OngoingLeads=({navigation})=> {
           ConsumerName:itemData.item.consumer_name,
           Booking_id:itemData.item.Booking_id,
           Consumer_id:itemData.item.Consumer_id,
+          job_Status:itemData.item.jobStatus,
         }
       });
     }}>

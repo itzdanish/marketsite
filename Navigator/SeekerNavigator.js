@@ -6,7 +6,7 @@ import ScheduleSlot from '../screens/ScheduleSlot';
 import BookingDone from '../screens/BookingDone';
 import Chatwindow from '../screens/Chatwindow';
 import postads from '../screens/postads';
-//import Rateandreview from '../screens/Rateandreview';
+import Rateandreview from '../screens/Rateandreview';
 import ChangePassword from '../screens/ChangePassword';
 import PaymentHistory from '../screens/PaymentHistory';
 import  {MyTabs} from '../Navigator/SeekerBottomNavigator';
@@ -38,6 +38,8 @@ export function ServiceSeekerStackScreen (){
      name="ChangePassword" component={ChangePassword}/>     
     <ServiceSeekerStack.Screen options={{title:'Booking Detail',headerTitleAlign:'center'}}
      name="BookingDetail" component={BookingDetail}/>
+     <ServiceSeekerStack.Screen options={{title:'Rate Service',headerTitleAlign:'center'}}
+     name="Rateandreview" component={Rateandreview}/>
   </ServiceSeekerStack.Navigator>
    )
   }

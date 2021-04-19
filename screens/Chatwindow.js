@@ -66,14 +66,14 @@ export default function App() {
       await Promise.all(writes)
   }
 
-  if (!user) {
-      return (
-          <View style={styles.container}>
-              <TextInput style={styles.input} placeholder="Enter your name" value={name} onChangeText={setName} />
-              <Button onPress={handlePress} title="Enter the chat" />
-          </View>
-      )
-  }
+//   if (!user) {
+//       return (
+//           <View style={styles.container}>
+//               <TextInput style={styles.input} placeholder="Enter your name" value={name} onChangeText={setName} />
+//               <Button onPress={handlePress} title="Enter the chat" />
+//           </View>
+//       )
+//   }
   return <GiftedChat messages={messages} user={user} onSend={handleSend} />
 }
 

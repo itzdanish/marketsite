@@ -9,6 +9,7 @@ import ServiceDetail from '../screens/ServiceDetail';
 import Tellus from '../screens/Tellus';
 import providerreg from '../screens/providerreg';
 import MyAccountProvider from '../screens/MyAccountProvider';
+import OngoingDetail from '../screens/OngoingDetail';
 import  {MyProviderTabs} from '../Navigator/ProviderBottomNavigator';
 const ServiceProviderStack = createStackNavigator();
 
@@ -31,6 +32,8 @@ export function ServiceProviderStackScreen (){
       name="ServiceDetail" component={ServiceDetail}/>
       <ServiceProviderStack.Screen options={{title:'Enter Details',headerTitleAlign:'center'}}
       name="Tellus" component={Tellus}/>
+      <ServiceProviderStack.Screen options={{title:'Ongoing Details',headerTitleAlign:'center'}}
+      name="OngoingDetail" component={OngoingDetail}/>
       <ServiceProviderStack.Screen options={{title:'MyAccount Provider',headerTitleAlign:'center'}}
       name="MyAccountProvider" component={MyAccountProvider}/>
     </ServiceProviderStack.Navigator>

@@ -85,12 +85,13 @@ const MyAccountProviderScreen = ({navigation}) => {
   }
   getUser();
 
+  var images = '../assets/images/profile_pic/rajatjadhav.jpg';
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profiledetail}>
         <View style={styles.profilepicRow}>
           <Image
-            source={require("../assets/images/user.png")}
+            source={require(images)}
             resizeMode="contain"
             style={styles.profilepic}
           ></Image>
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
   },
   profilepic: {
     width: 58,
-    height: 58
+    height: 58, borderRadius:80
   },
   profilename: {
     color: '#000000',

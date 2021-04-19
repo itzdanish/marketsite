@@ -41,6 +41,8 @@ const Mybookings = ({navigation}) =>{
           slotTime:itemData.item.BookingTime,
           slotDate:itemData.item.Booking_Date,
           serviceprovidername:itemData.item.serviceprovider_name,
+          Booking_id:itemData.item.Booking_id,
+          serviceProviderid:itemData.item.Service_Provider_id,
         }
       });
     }

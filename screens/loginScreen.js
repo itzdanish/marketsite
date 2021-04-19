@@ -60,7 +60,6 @@ const Login = ({navigation}) => {
               const user = doc.data();
               cache.store('user', user)                    
                     var name = doc.data().name
-                    console.log("Document name:", doc.data().name)
                   if (name ===""){     
                     navigation.navigate('ServiceProviderreg')            
                       }else{           

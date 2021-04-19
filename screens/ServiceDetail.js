@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { TouchableOpacity, Image, ScrollView,Modal, StyleSheet, View, Text,SafeAreaView, Alert } from "react-native";
 import { RadioButton } from 'react-native-paper';
+import call from 'react-native-phone-call';
+import Svg, { Ellipse } from "react-native-svg";
 import * as firebase from 'firebase';
 import db from '../config';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function ServiceDetail({route}) {
     const [modalVisible, setModalVisible] = useState(false);
     const [checked, setChecked] = React.useState('first');
-
+    const [phone,setPhone] = React.useState('');
+    
     const Booking_Time = route.params.details.Booking_Time;
     const CategoryName= route.params.details.CategoryName;
     const BookingAddress= route.params.details.BookingAddress;
@@ -37,6 +41,24 @@ function ServiceDetail({route}) {
     setModalVisible(!modalVisible);
     Alert.alert("Job Cancelled");
   }
+
+  const getDetails = async () => {
+    var docRef = db.collection("serviceseeker").doc(Consumer_id);
+    docRef.get().then((doc) => {
+      setPhone(doc.data())
+  })}
+
+  useEffect(()=>{
+    getDetails();
+  },[])
+
+  const phoneNumber = phone.phoneno;
+    
+    const dialCall = {
+      number:phoneNumber, // String value with the number to call
+      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
+    };
+    
 
   return (
     <SafeAreaView style={styles.container}>
@@ -75,6 +97,20 @@ function ServiceDetail({route}) {
         <Text style={styles.LocationArea}>{BookingAddress}</Text>
         <Text style={styles.LocationArea}>{BookingArea}</Text>
         <Text style={styles.LocationState}>{BookingCity} {BookingPincode}</Text></View>
+        <TouchableOpacity style={styles.ellipseStack} onPress={() => call(dialCall)}>
+        <Svg viewBox="0 0 100 100" style={styles.ellipse}>
+          <Ellipse
+            stroke="rgba(230, 230, 230,1)"
+            strokeWidth={0}
+            fill="rgba(230, 230, 230,230)"
+            cx={50}
+            cy={50}
+            rx={50}
+            ry={50}
+          ></Ellipse>
+        </Svg>
+        <MaterialCommunityIcons name='phone' style={styles.image} size={52} color="green" />
+      </TouchableOpacity>
         <Modal
         animationType="slide"
         transparent={true}
@@ -341,6 +377,29 @@ const styles = StyleSheet.create({
     width: 102,
     fontSize: 16,
     marginLeft: 67
+  },
+  ellipse: {
+    top: 0,
+    left: 0,
+    width: 70,
+    height: 70,
+    position: "absolute",
+    color:'green'
+  },
+  image: {
+    top: 10,
+    left: 10,
+    width: 70,
+    height: 69,
+    position: "absolute"
+  },
+  ellipseStack: {
+    width: 70,
+    height: 80,
+    marginTop: "140%",
+    marginLeft: "78%",
+    position:'absolute',
+    color:'green'
   }
 });
 

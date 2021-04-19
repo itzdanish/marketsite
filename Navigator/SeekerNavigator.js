@@ -4,7 +4,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SelectServiceProvider from '../screens/Selectserviceprovider';
 import ScheduleSlot from '../screens/ScheduleSlot';
 import BookingDone from '../screens/BookingDone';
-import Chatwindow from '../screens/Chatwindow';
 import postads from '../screens/postads';
 import Rateandreview from '../screens/Rateandreview';
 import ChangePassword from '../screens/ChangePassword';
@@ -26,8 +25,6 @@ export function ServiceSeekerStackScreen (){
       name="ScheduleSlot" component={ScheduleSlot}/>
     <ServiceSeekerStack.Screen options={{title:'BookingDone',headerTitleAlign:'center'}} 
     name="BookingDone" component={BookingDone}/>
-    <ServiceSeekerStack.Screen options={{title:'Chats',headerTitleAlign:'center'}} 
-    name="Chatwindow" component={Chatwindow}/>
     <ServiceSeekerStack.Screen options={{title:'Post Ads',headerTitleAlign:'center'}}
     name="postads" component={postads}/>
           <ServiceSeekerStack.Screen options={{title:'Notifications',headerTitleAlign:'center'}} 

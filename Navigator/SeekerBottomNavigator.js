@@ -7,10 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Categories from '../screens/Categories';
 import MyBookingsScreen from '../screens/MyBookingsScreen';
 import MyAccountScreen from '../screens/MyAccountScreen';
-import ChatScreen from '../screens/ChatScreen';
 
-import cache from '../cache';
-import { get } from 'lodash';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,15 +25,6 @@ export function MyTabs() {
         },
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="grid-outline"  size={32} color="black"></Ionicons>
-        ),
-      }}/>
-      <Tab.Screen name="ChatScreen" component={ChatScreen} options={{
-        tabBarLabel:(tabInfo)=>{
-          return<View>
-              <Text style={{fontSize:12,textAlign:'center',}}>Chat</Text>
-          </View>
-      },tabBarIcon: ({ color, size }) => (
-        <MaterialCommunityIcons name="chat-processing-outline" size={32} color="black" />
         ),
       }}/>
       <Tab.Screen name="MyBookings" component={MyBookingsScreen} options={{

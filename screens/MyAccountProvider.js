@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity, Modal ,SafeAreaView} from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import cache from '../cache';
@@ -31,27 +31,60 @@ const CustomModal = ({title, modalVisible, onClose, Content}) => {
 }
 
 const EarningContent = () => {
+  const [earning, setEarning] = useState("");
+  const loadEarning = async () => {
+    const user = await cache.get('user');
+    setEarning(user.earnings);
+  }
+  useEffect(()=> {
+      loadEarning();
+  }, [])
   return(
   <View>
     <Image style={{width:40,height:38, marginTop:10}}
     source={require("../assets/images/rupee-indian.png")}
     resizeMode="contain"
   ></Image>
-    <Text style={{fontSize:54,marginLeft:38, marginTop:-57, marginBottom:7}}>5400</Text>
+    <Text style={{fontSize:54,marginLeft:38, marginTop:-57, marginBottom:7}}>{earning}</Text>
 <Text style={{marginLeft:8, marginTop:-15,color:'#E21F1F',marginBottom:7, fontSize:20}}>Earned Till Now</Text>
 </View>
 );
 }
 
 const RatingContent = () => {
+  const [rating, setRating] = useState("");
+  const [ratingCount, setRatingsCount] = useState("");
+  const [maxRating,setmaxrating] = useState([1,2,3,4,5]);
+
+ const starImgFilled =  require('../assets/images/star_filled.png');
+ const starImgCorner =  require('../assets/images/star_corner.png');
+
+const CustomRatingBar =()=>{
+  return(
+    <View style={{flexDirection:'row'}}>
+      {
+        maxRating.map((item)=>{
+            return(
+              <Image key={item} style={{width:30,height:32,marginTop:20,marginLeft:8}} size={12} source={item = rating ? starImgCorner : starImgFilled}/>
+            )
+        })
+      }
+    </View>
+  )
+}
+
+  const loadEarning = async () => {
+    const user = await cache.get('user');
+    setRating(user.ratings);
+    setRatingsCount(user.ratingCount);
+  }
+  useEffect(()=> {
+      loadEarning();
+  }, [])
   return(
   <View>
-            
-            <Image style={{width:100,height:28,marginTop:10,marginLeft:8}}
-            source={require("../assets/images/rating.png")}
-            resizeMode="contain"
-          ></Image>
-      <Text style={{marginLeft:8, marginTop:-1,color:'#E21F1F',marginBottom:7, fontSize:20}}>Based on 5 ratings</Text>
+            <CustomRatingBar />
+      <Text style={{marginLeft:8, marginTop:5,color:'#E21F1F',marginBottom:7, fontSize:20}}>Based on {ratingCount} ratings</Text>
       </View>
   );
 }
@@ -61,8 +94,6 @@ const MyAccountProviderScreen = ({navigation}) => {
   const [user, setUser] = useState();
   const [email, setEmail] = useState();
   const [phoneno, setPhoneno] = useState();
-  const [earning, setEarning] = useState();
-  const [rating, setRating] = useState();
 
   const logout = () => {
     firebase.auth().signOut().then(() => {
@@ -80,8 +111,6 @@ const MyAccountProviderScreen = ({navigation}) => {
     setUser(user.name);
     setEmail(user.email);
     setPhoneno(user.phoneno);
-    setEarning(user.earnings);
-    setRating(user.ratings);
   }
   getUser();
 

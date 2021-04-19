@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Chatwindow from '../screens/Chatwindow';
 import postads from '../screens/postads';
 import ChangePassword from '../screens/ChangePassword';
 import ServiceProviderreg from '../screens/ServiceProviderreg';
@@ -23,9 +22,7 @@ export function ServiceProviderStackScreen (){
           <ServiceProviderStack.Screen options={{headerShown:false}}
       name="providerreg" component={providerreg}/>
         <ServiceProviderStack.Screen options={{title:'Select Your Service',headerTitleAlign:'center'}}
-         name="postads" component={postads}/>
-      <ServiceProviderStack.Screen options={{headerShown:false}} 
-      name="Chatwindow" component={Chatwindow}/>      
+         name="postads" component={postads}/>     
       <ServiceProviderStack.Screen options={{title:'Change Password',headerTitleAlign:'center'}} 
       name="ChangePassword" component={ChangePassword}/>
       <ServiceProviderStack.Screen options={{title:'Service Detail',headerTitleAlign:'center'}}

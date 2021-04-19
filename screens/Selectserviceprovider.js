@@ -20,11 +20,8 @@ const Selectserviceprovider = ({route,navigation}) => {
       }}>
         <View style={styles.imageRow}>
           <View>
-          <Image
-            source={require('../assets/images/profile_pic/rajatjadhav.jpg')}
-            resizeMode="contain"
-            style={styles.image}
-          ></Image></View>
+          
+          </View>
           <View style={styles.adpersonnameStack}>
             <Text style={styles.adpersonname}>{itemData.item.name}</Text>
             <CustomRatingBar/>
@@ -43,11 +40,6 @@ const Selectserviceprovider = ({route,navigation}) => {
               ></Image>
             </View>
           </View>
-          <TouchableOpacity style={styles.chatbutton} onPress={() => {
-        navigation.navigate('Chatwindow');
-      }}>
-            <Text style={styles.chat}>Chat</Text>
-          </TouchableOpacity>
         </View>
       </TouchableOpacity>
      </View>     
@@ -210,7 +202,7 @@ const styles = StyleSheet.create({
     height: 47,
     flexDirection: "row",
     marginTop: 6,
-    marginLeft: 59,
+    marginLeft: 20,
     marginRight: 5
   }
 });

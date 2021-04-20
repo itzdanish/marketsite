@@ -68,12 +68,6 @@ const ScheduleSlot = ({ route, navigation }) => {
   const serviceprovider_name = route.params.details.serviceprovider_name;
   var [isPress, setIsPress] = React.useState(false);
 
-  var touchProps = {
-    activeOpacity: 1,
-    underlayColor: '#c4c4c4',
-    style: isPress ? styles.ts1Press : styles.ts1,
-
-  };
 
   const isaddressValid = text => {
     if (text.trim().length < 1) return false

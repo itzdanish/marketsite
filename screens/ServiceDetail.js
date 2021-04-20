@@ -27,14 +27,14 @@ function ServiceDetail({route}) {
 
   const jobStatus = ()=>{
     db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
-      jobStatus:"accepted"
+      jobStatus:"Job Accepted"
     })  
     Alert.alert("Job Status Updated");
   }
 
   const jobCancel =()=>{
     db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
-      jobStatus:'cancelled',
+      jobStatus:'Job Cancelled',
       rejectionReason:checked,
       rejected_by:email
     })

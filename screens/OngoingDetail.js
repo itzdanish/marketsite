@@ -30,7 +30,7 @@ function OngoingDetail({route,navigation}) {
     const email=firebase.auth().currentUser.email;
 
   const jobStatus = ()=>{
-    if (job_Status=="job Started") {
+    if (job_Status ==="Job Accepted") {
       db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
         jobStatus:"Job Started"
       })  

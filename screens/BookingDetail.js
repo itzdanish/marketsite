@@ -296,24 +296,24 @@ const styles = StyleSheet.create({
   },
   LocationArea: {
     color: "#121212",
-    width: 280,
+    width: 300,
     fontSize: 18,
     marginLeft: 22,
     
   },
   LocationState: {
     color: "#121212",
-    width: 180,
+    width: 200,
     fontSize: 18,
     marginLeft: 22,
-    marginBottom:5,
+    marginBottom:15,
   },
   marginbutton: {
     width: 170,
     height: 48,
     backgroundColor: "#C4C4C4",
     borderRadius: 100,
-    marginTop: 0,
+    marginTop: -10,
     marginLeft: 23,
     marginBottom:0
   },
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     marginTop:-47,
     marginLeft: 210,
-    marginBottom:0
+    marginBottom:10
   },
   respond: {
     color: "#FFFFFF",

@@ -70,7 +70,7 @@ const  OngoingLeads=({navigation})=> {
   const result = [];
   const finalresult = [];
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [Service, setService] = useState([]);
   const [lead, setLead] = useState([]);
   const email=firebase.auth().currentUser.email;
@@ -84,7 +84,7 @@ const  OngoingLeads=({navigation})=> {
   }); 
   
   setService(result);
-  setLoading(false);
+  // setLoading(false);
   Service.forEach(async item =>  {
     await db.collection("booking").doc(item.Consumer_id).collection(item.Consumer_id).doc(item.Booking_id).get().then((querySnapshot) => {
       finalresult.push(querySnapshot.data());
@@ -99,14 +99,19 @@ const  OngoingLeads=({navigation})=> {
   },[loading]);
 
   
-  if(loading) return null
+  // if(loading) return null
   return (
             <FlatList
         keyExtractor={(item) => item.Booking_id}
         data={lead} 
         renderItem={renderGridItem} style={{marginTop:30}}
+        onRefresh={()=>{
+          setLoading(true)
+          getService()
+          setLoading(false)}
+        }
+        refreshing={loading}
         />
-    
   );
 }
 

@@ -43,6 +43,7 @@ const Mybookings = ({navigation}) =>{
           serviceprovidername:itemData.item.serviceprovider_name,
           Booking_id:itemData.item.Booking_id,
           serviceProviderid:itemData.item.Service_Provider_id,
+          serviceId:itemData.item.Service_id,
         }
       });
     }

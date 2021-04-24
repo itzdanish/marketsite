@@ -11,7 +11,8 @@ function OngoingDetail({route,navigation}) {
     const [modalVisible, setModalVisible] = useState(false);
     const [checked, setChecked] = React.useState('');
     const [phone,setPhone] = React.useState('');
-    
+    const [fixedCharge,setfixedCharge] = React.useState();
+
     const Booking_Time = route.params.details.Booking_Time;
     const CategoryName= route.params.details.CategoryName;
     const BookingAddress= route.params.details.BookingAddress;
@@ -23,12 +24,24 @@ function OngoingDetail({route,navigation}) {
     const ConsumerName = route.params.details.ConsumerName;
     const Booking_id =route.params.details.Booking_id;
     const Consumer_id = route.params.details.Consumer_id;
-
+    const Service_id = route.params.details.Service_id;
     var job_Status = route.params.details.job_Status;
    
   
     const email=firebase.auth().currentUser.email;
 
+    const getProviderDetails = async () => {
+      var docRef = db.collection("serviceprovider").doc(email);
+      docRef.get().then((doc) => {
+        setfixedCharge(doc.data())
+    })}
+     
+
+    useEffect(()=>{
+      getProviderDetails();
+    },[])
+
+  
   const jobStatus = ()=>{
     if (job_Status ==="Job Accepted") {
       db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
@@ -36,8 +49,13 @@ function OngoingDetail({route,navigation}) {
       })  
     } else {
       db.collection("booking").doc(Consumer_id).collection(Consumer_id).doc(Booking_id).update({
-        jobStatus:"Job Ended"
+        jobStatus:"Job Ended",
+        final_charge:300
       })  
+      db.collection("serviceprovider").doc(email).update({
+        earnings:firebase.firestore.FieldValue.increment(fixedCharge.fixedcharge),
+        service_Done:firebase.firestore.FieldValue.increment(+1)
+      }) 
     }    
     Alert.alert("Job Status Updated");
     navigation.navigate('OngoingLeads')
@@ -53,6 +71,8 @@ function OngoingDetail({route,navigation}) {
     Alert.alert("Job Cancelled");
     
   }
+
+
 
   const getDetails = async () => {
     var docRef = db.collection("serviceseeker").doc(Consumer_id);

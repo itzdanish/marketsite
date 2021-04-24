@@ -3,6 +3,8 @@ import { StyleSheet, View, Image, Text, TouchableOpacity, Modal ,SafeAreaView} f
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import cache from '../cache';
 import * as firebase from 'firebase';
+import db from '../config';
+
 
 const CustomModal = ({title, modalVisible, onClose, Content}) => {
   
@@ -32,10 +34,13 @@ const CustomModal = ({title, modalVisible, onClose, Content}) => {
 
 const EarningContent = () => {
   const [earning, setEarning] = useState("");
+  const email=firebase.auth().currentUser.email;
   const loadEarning = async () => {
-    const user = await cache.get('user');
-    setEarning(user.earnings);
-  }
+    var docRef = db.collection("serviceprovider").doc(email);
+      docRef.get().then((doc) => {
+    setEarning(doc.data());
+  })}
+
   useEffect(()=> {
       loadEarning();
   }, [])
@@ -45,55 +50,83 @@ const EarningContent = () => {
     source={require("../assets/images/rupee-indian.png")}
     resizeMode="contain"
   ></Image>
-    <Text style={{fontSize:54,marginLeft:38, marginTop:-57, marginBottom:7}}>{earning}</Text>
+    <Text style={{fontSize:54,marginLeft:38, marginTop:-57, marginBottom:7}}>{earning.earnings}</Text>
 <Text style={{marginLeft:8, marginTop:-15,color:'#E21F1F',marginBottom:7, fontSize:20}}>Earned Till Now</Text>
 </View>
 );
 }
 
 const RatingContent = () => {
-  const [rating, setRating] = useState("");
-  const [ratingCount, setRatingsCount] = useState("");
-  const [maxRating,setmaxrating] = useState([1,2,3,4,5]);
-
+  const result=[];
+    const email=firebase.auth().currentUser.email;
+  const [ratingCount, setRatingsCount] = useState([]);
+const [sum,setSum]= useState(0)
+const[length,setLength] = useState(0)
  const starImgFilled =  require('../assets/images/star_filled.png');
- const starImgCorner =  require('../assets/images/star_corner.png');
 
+
+ const loadRating=()=>{
+ 
+    db.collection("service").doc(email).collection(email).get().then((querySnapshot) => {
+      
+      querySnapshot.forEach((doc) => {       
+          result.push(doc.data().rating);
+      });
+        setRatingsCount(result);
+        const arraylength = result.length;
+        setLength(arraylength);
+          //adding array element
+ 
+          const add = result.reduce(function(a, b){
+             return  a + b;  
+         }, 0);
+         setSum(add)
+  });
+
+}
+
+const ratingFinal=[]
+const finalsum = sum/length;
+for (let i = 0; i < finalsum; i++) {
+ratingFinal.push(i)
+}
+
+useEffect(()=>{
+  loadRating()
+},[])
+  
+  
 const CustomRatingBar =()=>{
   return(
     <View style={{flexDirection:'row'}}>
       {
-        maxRating.map((item)=>{
+        ratingFinal.map((item)=>{
             return(
-              <Image key={item} style={{width:30,height:32,marginTop:20,marginLeft:8}} size={12} source={item = rating ? starImgCorner : starImgFilled}/>
+              <Image key={item} style={{width:30,height:32,marginTop:20,marginLeft:8}} size={12} source={starImgFilled}/>
             )
         })
       }
     </View>
   )
 }
-
-  const loadEarning = async () => {
-    const user = await cache.get('user');
-    setRating(user.ratings);
-    setRatingsCount(user.ratingCount);
-  }
-  useEffect(()=> {
-      loadEarning();
-  }, [])
+ 
   return(
   <View>
-            <CustomRatingBar />
-      <Text style={{marginLeft:8, marginTop:5,color:'#E21F1F',marginBottom:7, fontSize:20}}>Based on {ratingCount} ratings</Text>
+    <CustomRatingBar />
+      <Text style={{marginLeft:8, marginTop:5,color:'#E21F1F',marginBottom:7, fontSize:20}}>Based on {length} ratings</Text>
       </View>
   );
+  
 }
+
+
 
 const MyAccountProviderScreen = ({navigation}) => {
 
   const [user, setUser] = useState();
   const [email, setEmail] = useState();
   const [phoneno, setPhoneno] = useState();
+  const [image,setImage]= useState();
 
   const logout = () => {
     firebase.auth().signOut().then(() => {
@@ -111,16 +144,17 @@ const MyAccountProviderScreen = ({navigation}) => {
     setUser(user.name);
     setEmail(user.email);
     setPhoneno(user.phoneno);
+    setImage(user.image)
   }
   getUser();
 
-  var images = '../assets/images/profile_pic/rajatjadhav.jpg';
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profiledetail}>
         <View style={styles.profilepicRow}>
           <Image
-            source={require(images)}
+            source={{uri:image}}
             resizeMode="contain"
             style={styles.profilepic}
           ></Image>

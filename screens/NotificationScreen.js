@@ -4,18 +4,6 @@ import { StyleSheet, View, Text } from "react-native";
 function NotificationScreen(props) {
   return (
     <View style={styles.container}>
-      <View style={styles.rect1}>
-        <Text style={styles.appointmentFixed}>Appointment Fixed</Text>
-        <Text style={styles.text}>Wed 10 Dec , 2020 at 2.00 pm</Text>
-      </View>
-      <View style={styles.rect6}>
-        <Text style={styles.serviceCompleted}>Service Completed</Text>
-        <Text style={styles.text2}>Fri 13 Nov , 2020 at 2.00 pm</Text>
-      </View>
-      <View style={styles.rect7}>
-        <Text style={styles.appointmentFixed1}>Appointment Fixed</Text>
-        <Text style={styles.text3}>Fri 13 Nov , 2020 at 12.00 pm</Text>
-      </View>
       <View style={styles.rect8}>
         <Text style={styles.accountCreated}>Account Created</Text>
         <Text style={styles.text4}>Thu 12 Nov , 2020 at 08.00 pm</Text>

@@ -45,6 +45,7 @@ const  OngoingLeads=({navigation})=> {
           Booking_id:itemData.item.Booking_id,
           Consumer_id:itemData.item.Consumer_id,
           job_Status:itemData.item.jobStatus,
+          Service_id:itemData.item.Service_id,
         }
       });
     }}>
@@ -84,7 +85,7 @@ const  OngoingLeads=({navigation})=> {
   }); 
   
   setService(result);
-  // setLoading(false);
+  
   Service.forEach(async item =>  {
     await db.collection("booking").doc(item.Consumer_id).collection(item.Consumer_id).doc(item.Booking_id).get().then((querySnapshot) => {
       finalresult.push(querySnapshot.data());

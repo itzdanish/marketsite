@@ -20,7 +20,11 @@ const Selectserviceprovider = ({route,navigation}) => {
       }}>
         <View style={styles.imageRow}>
           <View>
-          
+          <Image
+          source={{uri:itemData.item.image}}
+          resizeMode="contain"
+          style={styles.image}
+          ></Image>
           </View>
           <View style={styles.adpersonnameStack}>
             <Text style={styles.adpersonname}>{itemData.item.name}</Text>
@@ -143,7 +147,7 @@ const styles = StyleSheet.create({
   },
   servicecount: {
     color: "rgba(164,187,139,1)",
-    marginLeft: 235,
+    marginLeft: 255,
     marginTop: 37,
     position:'absolute'
   },
@@ -202,7 +206,7 @@ const styles = StyleSheet.create({
     height: 47,
     flexDirection: "row",
     marginTop: 6,
-    marginLeft: 20,
+    marginLeft: 59,
     marginRight: 5
   }
 });

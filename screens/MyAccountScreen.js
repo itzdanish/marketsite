@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
+import * as ImagePicker from 'expo-image-picker';
 import * as firebase from 'firebase';
 import cache from '../cache';
 
@@ -9,8 +10,18 @@ const  MyAccountScreen = ({navigation}) => {
   const [user, setUser] = useState()
   const [email, setEmail] = useState()
   const [phoneno, setPhoneno] = useState()  
-  const [image, setImage] = useState()
+  const [image, setImage] = useState();
 
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
 
   const logout = () => {
     firebase.auth().signOut().then(() => {
@@ -31,17 +42,32 @@ const  MyAccountScreen = ({navigation}) => {
   }
   getUser();
   
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-  var images = '../assets/images/profile_pic/danishkhan.jpg';
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  
   return (
     <View style={styles.container}>
       <View style={styles.profiledetail}>
         <View style={styles.profilepicRow}>
+          <TouchableOpacity onPress={()=>pickImage()}>
           <Image
-            source={require(images)}
+            source={{uri:image}}
             resizeMode="contain"
             style={styles.profilepic}
           ></Image>
+          </TouchableOpacity>
           <View style={styles.profilenameColumn}>
             <Text style={styles.profilename}>{user}</Text>
             <Text style={styles.emailandphone}>

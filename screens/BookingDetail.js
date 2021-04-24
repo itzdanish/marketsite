@@ -22,7 +22,9 @@ function BookingDetail({route,navigation}) {
     const serviceprovidername = route.params.details.serviceprovidername;
     const serviceProviderid = route.params.details.serviceProviderid;
     const Booking_id = route.params.details.Booking_id;
+    const serviceId = route.params.details.serviceId;
     const email=firebase.auth().currentUser.email;
+    
 
     const jobCancel =()=>{
       db.collection("booking").doc(email).collection(email).doc(Booking_id).update({
@@ -36,8 +38,10 @@ function BookingDetail({route,navigation}) {
     const Rateandreview = ()=>{
       navigation.navigate('Rateandreview',{
         details:{
+          serviceProviderid:serviceProviderid,
           serviceprovidername:serviceprovidername,
           Booking_id:Booking_id,
+          serviceId:serviceId,
         }
       })
     } 

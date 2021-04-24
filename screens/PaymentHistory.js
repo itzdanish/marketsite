@@ -1,15 +1,17 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import React, { useState} from "react";
+import { useFocusEffect } from '@react-navigation/native';
+import { StyleSheet, TouchableOpacity, Text,FlatList, SafeAreaView, View ,Image} from "react-native";
+import * as firebase from 'firebase';
+import db from '../config';
 
-function PaymentHistory(props) {
-  return (
-    <View style={styles.container}>
-      <View style={styles.rect1}>
-        <View style={styles.pankajKumarColumnRow}>
-          <View style={styles.pankajKumarColumn}>
-            <Text style={styles.pankajKumar}>Pankaj Kumar</Text>
-            <Text style={styles.text}>Wed 10 Dec , 2020 at 2.00 pm</Text>
-          </View>
+
+const PaymentHistory = () =>{
+  
+  const renderGridItem = (itemData) =>{
+
+       return <TouchableOpacity style={styles.list1}>
+          <Text style={styles.listname}>{itemData.item.serviceprovider_name}</Text>
+          <Text style={styles.timeanddate}>{itemData.item.Booking_Date}</Text>
           <View style={styles.amountColumn}>
             <Text style={styles.amount}>Amount</Text>
             <View style={styles.imageRow}>
@@ -18,12 +20,38 @@ function PaymentHistory(props) {
                 resizeMode="contain"
                 style={styles.image}
               ></Image>
-              <Text style={styles.text2}>547</Text>
+              <Text style={styles.text2}>{itemData.item.final_charge}</Text>
             </View>
           </View>
-        </View>
-      </View>
-    </View>
+        </TouchableOpacity>
+  }
+
+  const result = []
+  const [loading, setLoading] = useState(true);
+  const [booking, setBooking] = useState([]);
+  const email=firebase.auth().currentUser.email;
+  const getBooking = async () => {
+    await db.collection("booking").doc(email).collection(email).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          result.push(doc.data());
+      });
+  });
+  setBooking(result);
+  setLoading(false);
+  }
+
+  useFocusEffect(()=>{
+    getBooking();
+  })
+
+  if(loading) return null
+  return (
+    <SafeAreaView style={styles.container}>
+    <FlatList
+    keyExtractor={(item) => item.Booking_id}
+    data={booking} 
+    renderItem={renderGridItem} 
+    /></SafeAreaView>
   );
 }
 
@@ -31,24 +59,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgba(238,238,238,1)",
-    opacity: 0.97
   },
-  rect1: {
+  list1: {
     width: 395,
-    height: 85,
+    height: 63,
     backgroundColor: "rgba(255,255,255,1)",
     marginTop: 5
   },
-  pankajKumar: {
+  listname: {
     color: "#121212",
-    fontSize: 17
+    height: 29,
+    width: 143,
+    fontSize: 17,
+    marginTop: 6,
+    marginLeft: 11,
+    fontWeight:'bold',
   },
-  text: {
+  timeanddate: {
     color: "#121212",
-    marginTop: 8
-  },
-  pankajKumarColumn: {
-    width: 185
+    marginTop: 0,
+    marginLeft: 11
   },
   amount: {
     color: "#121212"
@@ -71,16 +101,9 @@ const styles = StyleSheet.create({
   },
   amountColumn: {
     width: 55,
-    marginLeft: 120,
-    marginBottom: 6
+    marginLeft: 320,
+    marginTop:-43
   },
-  pankajKumarColumnRow: {
-    height: 45,
-    flexDirection: "row",
-    marginTop: 15,
-    marginLeft: 19,
-    marginRight: 22
-  }
 });
 
 export default PaymentHistory;

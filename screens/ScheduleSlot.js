@@ -34,15 +34,7 @@ const Button = (props) => {
 <TouchableOpacity {...touchProps} onPress={clickHandler}>
 <Text style={styles.ts1text}>{slot[0]}{'\n'}{slot[2]}</Text>
 </TouchableOpacity>
-    // <button
-    //   className={`btn ${
-    //     active ? "btn-success" : null
-    //   } btn-outline-secondary mb-1 form-control text-left`}
-    //   value={value}
-    //   onClick={clickHandler}
-    // >
-    //   {value}
-    // </button>
+
   )
 };
 
@@ -115,7 +107,6 @@ const ScheduleSlot = ({ route, navigation }) => {
           category_name: categoryTitle,
           Service_Provider_id: serviceprovider_email,
           serviceprovider_name: serviceprovider_name,
-          service_id: "",
           date_time: firebase.firestore.Timestamp.fromDate(new Date()),
           is_completed: "",
           rejectionReason: "",
@@ -138,14 +129,18 @@ const ScheduleSlot = ({ route, navigation }) => {
           Consumer_id: email,
           category_name: categoryTitle,
           Service_id: "",
-          final_charge: "",
+          final_charge: 0,
+          rating:0
         })
           .then(function (doc) {
             var service_id = doc.id;
+           
             db.collection("service").doc(serviceprovider_email).collection(serviceprovider_email).doc(service_id).update({
               Service_id: doc.id,
-
             })
+            db.collection("booking").doc(email).collection(email).doc(booking_id).update({
+              Service_id: service_id,
+            });
           })
 
         navigation.navigate('BookingDone', {
@@ -205,7 +200,7 @@ const ScheduleSlot = ({ route, navigation }) => {
             {
               nextFiveDay.map((slot, index) => {
                 return (
-                          <Button slot={slot} id={index} setActiveButton={setActiveButton} 
+                          <Button key={index} slot={slot} id={index} setActiveButton={setActiveButton} 
                           active={activeButton === index ? true : false} fetch={fetch} setSlot={setSlot}  />
                       );
               })

@@ -102,6 +102,7 @@ const  OngoingLeads=({navigation})=> {
   
   // if(loading) return null
   return (
+    <View>
             <FlatList
         keyExtractor={(item) => item.Booking_id}
         data={lead} 
@@ -112,7 +113,7 @@ const  OngoingLeads=({navigation})=> {
           setLoading(false)}
         }
         refreshing={loading}
-        />
+        /></View>
   );
 }
 

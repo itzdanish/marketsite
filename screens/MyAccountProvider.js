@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Image, Text, TouchableOpacity, Modal ,SafeAreaView} from "react-native";
+import React, { useEffect, useState} from "react";
+import { StyleSheet, View, Image, Text, TouchableOpacity, Modal ,SafeAreaView, Alert} from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
-import cache from '../cache';
+import * as ImagePicker from 'expo-image-picker';
 import * as firebase from 'firebase';
+import 'firebase/storage';
 import db from '../config';
 
 
@@ -123,45 +124,163 @@ const CustomRatingBar =()=>{
 
 const MyAccountProviderScreen = ({navigation}) => {
 
-  const [user, setUser] = useState();
-  const [email, setEmail] = useState();
-  const [phoneno, setPhoneno] = useState();
-  const [image,setImage]= useState();
-
-  const logout = () => {
-    firebase.auth().signOut().then(() => {
-      navigation.navigate('Login');
-    }).catch((error) => {
-    });
-  }
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
 
 
-  const getUser = async () => {
-    const user = await cache.get('user');
-    setUser(user.name);
-    setEmail(user.email);
-    setPhoneno(user.phoneno);
-    setImage(user.image)
+  const [user, setUser] = useState()
+  const [phoneno, setPhoneno] = useState()  
+  const [image, setImage] = useState();
+  
+  const userid=firebase.auth().currentUser.email;
+  
+  const getSeekerDetails = async () => {
+    var docRef = db.collection("serviceprovider").doc(userid);
+    docRef.get().then((doc) => {
+      setUser(doc.data().name)
+      setPhoneno(doc.data().phoneno)
+      setImage(doc.data().image)
+  })}
+   
+
+  useEffect(()=>{
+    getSeekerDetails();
+  },[])
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  const logout = () => {
+    firebase.auth().signOut().then(() => {
+      console.log('Signout successful')
+      navigation.navigate('Login')
+    }).catch((error) => {
+    })
   }
-  getUser();
+
+
+  
+  const uriToBlob = (uri) => {
+
+    return new Promise((resolve, reject) => {
+
+      const xhr = new XMLHttpRequest();
+
+      xhr.onload = function() {
+        // return the blob
+        resolve(xhr.response);
+        
+      };
+      
+      xhr.onerror = function() {
+        // something went wrong
+        reject(new Error('uriToBlob failed'));
+      };
+
+      // this helps us get a blob
+      xhr.responseType = 'blob';
+
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+
+    });
+
+  }
+
+  const uploadToFirebase = (blob) => {
+  
+    return new Promise((resolve, reject)=>{
+    
+      var storageRef = firebase.storage().ref();
+
+      const uploadTask = storageRef.child(`/ProfilePic/serviceprovider/${userid}.jpg`).put(blob, {
+        contentType: 'image/jpeg'
+      })
+    uploadTask.on('state_changed', 
+  (snapshot) => {
+   
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    resolve(snapshot);
+   
+  }, 
+  (error) => {
+    // Handle unsuccessful uploads
+  }, 
+  async () => {
+    await uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          
+     db.collection("serviceprovider").doc(userid).update({
+      image:downloadURL,
+    }) 
+
+    });
+  }
+);
+
+    });
+
+  
+
+  }      
+
+
+  const handleOnPress = () => { 
+
+    ImagePicker.launchCameraAsync({ 
+      mediaTypes: "Images"
+    }).then((result)=>{ 
+
+      if (!result.cancelled) {
+        // User picked an image
+        const {height, width, type, uri} = result;
+      
+        const link = uriToBlob(uri);
+        
+        return link
+      }
+
+    }).then((blob)=>{
+      
+      return uploadToFirebase(blob);
+
+    }).then((snapshot)=>{
+      
+      Alert.alert("Profile Changed")
+   
+    }).catch((error)=>{
+
+      throw error;
+
+    }); 
+
+  }
+
 
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profiledetail}>
         <View style={styles.profilepicRow}>
+          <TouchableOpacity onPress={()=>handleOnPress()}>
           <Image
             source={{uri:image}}
             resizeMode="contain"
             style={styles.profilepic}
           ></Image>
+          </TouchableOpacity>
           <View style={styles.profilenameColumn}>
             <Text style={styles.profilename}>{user}</Text>
             <Text style={styles.emailandphone}>
-            {email}
+            {userid}
               {"\n"}
               {phoneno}
             </Text>

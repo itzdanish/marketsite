@@ -3,14 +3,32 @@ import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import * as ImagePicker from 'expo-image-picker';
 import * as firebase from 'firebase';
+import 'firebase/storage';
+import db from '../config';
 import cache from '../cache';
+import { Alert } from "react-native";
+
 
 const  MyAccountScreen = ({navigation}) => {
 
   const [user, setUser] = useState()
-  const [email, setEmail] = useState()
   const [phoneno, setPhoneno] = useState()  
   const [image, setImage] = useState();
+  
+  const userid=firebase.auth().currentUser.email;
+  
+  const getSeekerDetails = async () => {
+    var docRef = db.collection("serviceseeker").doc(userid);
+    docRef.get().then((doc) => {
+      setUser(doc.data().name)
+      setPhoneno(doc.data().phoneno)
+      setImage(doc.data().image)
+  })}
+   
+
+  useEffect(()=>{
+    getSeekerDetails();
+  },[])
 
   useEffect(() => {
     (async () => {
@@ -31,37 +49,109 @@ const  MyAccountScreen = ({navigation}) => {
     })
   }
 
-  const getUser = async () => {
-    const user = await cache.get('user')
-    
-    setUser(user.name)
-    setEmail(user.email)
-    setPhoneno(user.phoneno)
-    setImage(user.image)
 
-  }
-  getUser();
   
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
+  const uriToBlob = (uri) => {
+
+    return new Promise((resolve, reject) => {
+
+      const xhr = new XMLHttpRequest();
+
+      xhr.onload = function() {
+        // return the blob
+        resolve(xhr.response);
+        
+      };
+      
+      xhr.onerror = function() {
+        // something went wrong
+        reject(new Error('uriToBlob failed'));
+      };
+
+      // this helps us get a blob
+      xhr.responseType = 'blob';
+
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+
     });
 
+  }
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
+  const uploadToFirebase = (blob) => {
+  
+    return new Promise((resolve, reject)=>{
+    
+      var storageRef = firebase.storage().ref();
+
+      const uploadTask = storageRef.child(`/ProfilePic/serviceseeker/${userid}.jpg`).put(blob, {
+        contentType: 'image/jpeg'
+      })
+    uploadTask.on('state_changed', 
+  (snapshot) => {
+   
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    resolve(snapshot);
+   
+  }, 
+  (error) => {
+    // Handle unsuccessful uploads
+  }, 
+  async () => {
+    await uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          
+     db.collection("serviceseeker").doc(userid).update({
+      image:downloadURL,
+    }) 
+
+    });
+  }
+);
+
+    });
+
+  
+
+  }      
+
+
+  const handleOnPress = () => { 
+
+    ImagePicker.launchCameraAsync({ 
+      mediaTypes: "Images"
+    }).then((result)=>{ 
+
+      if (!result.cancelled) {
+        // User picked an image
+        const {height, width, type, uri} = result;
+      
+        const link = uriToBlob(uri);
+        
+        return link
+      }
+
+    }).then((blob)=>{
+      
+      return uploadToFirebase(blob);
+
+    }).then((snapshot)=>{
+      
+      Alert.alert("Profile Changed")
+   
+    }).catch((error)=>{
+
+      throw error;
+
+    }); 
+
+  }
 
   
   return (
     <View style={styles.container}>
       <View style={styles.profiledetail}>
         <View style={styles.profilepicRow}>
-          <TouchableOpacity onPress={()=>pickImage()}>
+          <TouchableOpacity onPress={()=>handleOnPress()}>
           <Image
             source={{uri:image}}
             resizeMode="contain"
@@ -71,7 +161,7 @@ const  MyAccountScreen = ({navigation}) => {
           <View style={styles.profilenameColumn}>
             <Text style={styles.profilename}>{user}</Text>
             <Text style={styles.emailandphone}>
-              {email}
+              {userid}
               {"\n"}{phoneno}
             </Text>
           </View>

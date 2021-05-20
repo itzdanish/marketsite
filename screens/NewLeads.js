@@ -90,13 +90,24 @@ const  NewLeads=({navigation})=> {
 
   
   if(loading) return null
+  
+
   return (
     <View style={styles.container}>
+      {(() => {
+              if (lead.length===0)return (
+                <View  style={{alignItems: 'center',marginTop:'70%'}}>
+                <Text>No New Leads yet!</Text>
+                <Text>Post ads to get new leads if done please ignore</Text>
+                </View>)
+
+              return null;
+            })()}
        <FlatList
     keyExtractor={(item) => item.Booking_id}
     data={lead} 
     renderItem={renderGridItem} style={{marginTop:30}}
-    />
+    />     
       <TouchableOpacity style={styles.ellipseStack} onPress={() => {
             navigation.navigate('postads');
           }}>

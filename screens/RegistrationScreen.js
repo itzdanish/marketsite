@@ -78,6 +78,20 @@ const RegistrationScreen = ({navigation}) => {
               category_type:"",
               earnings:"0"
           })
+
+          db.collection("document").doc(email).collection("address").doc(email).set({
+            serviceProviderId:"",
+            image:"",
+            verifiedBy:""
+          }) 
+
+          db.collection("document").doc(email).collection("certificate").doc(email).set({
+            serviceProviderId:"",
+            image:"",
+            verifiedBy:""
+        
+          }) 
+
         }
           else{
             db.collection("serviceseeker").doc(email).set({

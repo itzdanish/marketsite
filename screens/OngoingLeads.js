@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 import { StyleSheet, View, Text, Image , FlatList} from "react-native";
-import Svg, { Ellipse } from "react-native-svg";
 import * as firebase from 'firebase';
 import db from '../config';
 
@@ -30,6 +29,7 @@ const  OngoingLeads=({navigation})=> {
     var convdataTime = month+'-'+day+'-'+year+' at '+hours + ':' + minutes.substr(-2);
     
     return <View style={styles.container}>
+      
     <TouchableOpacity style={styles.newleadslist} onPress={() => {
       navigation.navigate('OngoingDetail',{
         details:{
@@ -102,7 +102,7 @@ const  OngoingLeads=({navigation})=> {
   
   // if(loading) return null
   return (
-    <View>
+    
             <FlatList
         keyExtractor={(item) => item.Booking_id}
         data={lead} 
@@ -113,7 +113,7 @@ const  OngoingLeads=({navigation})=> {
           setLoading(false)}
         }
         refreshing={loading}
-        /></View>
+        />
   );
 }
 

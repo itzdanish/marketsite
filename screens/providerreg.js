@@ -110,10 +110,9 @@ function providerreg({navigation}) {
   async () => {
     await uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           
-     db.collection("document").doc(userid).collection("address").add({
+     db.collection("document").doc(userid).collection("address").doc(userid).update({
       serviceProviderId:userid,
       image:downloadURL,
-      verifiedBy:"",
     }) 
 
     });
@@ -122,7 +121,6 @@ function providerreg({navigation}) {
 
     });
 
-  
 
   }      
 
@@ -148,10 +146,10 @@ function providerreg({navigation}) {
   async () => {
     await uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           
-     db.collection("document").doc(userid).collection("certificate").add({
+     db.collection("document").doc(userid).collection("certificate").doc(userid).update({
       serviceProviderId:userid,
       image:downloadURL,
-      verifiedBy:"",
+  
     }) 
 
     });

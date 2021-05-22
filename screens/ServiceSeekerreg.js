@@ -52,7 +52,7 @@ const ServiceSeekerrreg = ({navigation}) => {
   }
 
   const reg = () =>{
-    if(!personName || !phone || !dob || !address ){
+    if(!nameValid || !phoneValid || !dobValid || !addressValid ){
       if(!isPhoneValid(phone)){
         setphoneIsValid(false);
         setphoneValidationMsg("Please enter a valid phone number");

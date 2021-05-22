@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   date: {
     color: "#121212",
     height: 27,
-    width: 90,
+    width: 100,
     fontSize: 18,
     marginLeft: 72
   },

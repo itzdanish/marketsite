@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity, Text, Image , Alert} from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import Svg, { Ellipse } from "react-native-svg";
@@ -12,6 +12,7 @@ import db from '../config';
 function providerreg({navigation}) {
   
   const userid=firebase.auth().currentUser.email;
+  const [image, setImage] = useState(require("../assets/images/plus.png"));
 
   useEffect(() => {
     (async () => {
@@ -330,7 +331,7 @@ function providerreg({navigation}) {
             ></Ellipse>
           </Svg>
           <Image
-            source={require("../assets/images/plus.png")}
+            source={image}
             resizeMode="contain"
             style={styles.image}
           ></Image>

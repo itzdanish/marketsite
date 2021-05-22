@@ -42,17 +42,18 @@ const Serviceproviderreg = ({navigation}) => {
   }
 
   const isDobValid = text =>{
-    if(text.trim().length <6) return false
+    if(text.trim().length <10) return false
     else return true
   }
 
   const isAddressValid = text =>{
-    if(text.trim().length <1) return false
+    if(text.trim().length <10) return false
     else return true
   }
 
   const reg = () =>{
-    if(!personName || !phone || !dob || !address ){
+    if(!nameValid || !phoneValid || !dobValid || !addressValid ){
+      Alert.alert("Check Input added")
       if(!isPhoneValid(phone)){
         setphoneIsValid(false);
         setphoneValidationMsg("Please enter a valid phone number");
@@ -73,7 +74,7 @@ const Serviceproviderreg = ({navigation}) => {
       }
       if(!isDobValid(dob)){
         setDobIsValid(false);
-        setDobValidationMsg("Please enter DOB");
+        setDobValidationMsg("Please enter DOB Properly");
     }
       else {
         setDobValidationMsg("");
@@ -89,7 +90,7 @@ const Serviceproviderreg = ({navigation}) => {
         setAddressIsValid(true);
         
       }
-      Alert.alert("Check Input added")
+      
     }else{
       try {
         const email=firebase.auth().currentUser.email;             

@@ -82,6 +82,10 @@ const[length,setLength] = useState(0)
              return  a + b;  
          }, 0);
          setSum(add)
+
+         db.collection("serviceprovider").doc(email).update({
+          ratings:add
+      })    
   });
 
 }
@@ -228,8 +232,6 @@ const MyAccountProviderScreen = ({navigation}) => {
 
     });
 
-  
-
   }      
 
 
@@ -255,7 +257,6 @@ const MyAccountProviderScreen = ({navigation}) => {
     }).then((snapshot)=>{
       
       Alert.alert("Profile Changed")
-   
     }).catch((error)=>{
 
       throw error;

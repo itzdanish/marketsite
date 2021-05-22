@@ -2,102 +2,52 @@ import React, { useEffect,useState } from "react";
 import { StyleSheet, View, Text, TouchableWithoutFeedback,Keyboard,TextInput,Alert,ScrollView } from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
 import * as firebase from 'firebase';
-import auth from '@react-native-firebase/auth';
-import db from '../config';
-import cache from '../cache';
 import { SafeAreaView } from "react-native-safe-area-context";
-
 
 
 const Serviceproviderreg = ({navigation}) => {
  
-  const [oldPasswordValid,setOldPasswordIsValid] = useState(false);
-  const [oldPasswordValidationMsg, setOldPasswordValidationMsg] = useState("");
-  const [newPasswordValid,setNewPasswordIsValid] = useState(false);
-  const [newPasswordValidationMsg, setNewPasswordValidationMsg] = useState("");
-  const [confirmPasswordValid,setConfirmPasswordIsValid] = useState(false);
-  const [confirmPasswordValidationMsg, setConfirmPasswordValidationMsg] = useState("");
+  const [emailValid,setemailIsValid] = useState(false);
+  const [emailValidationMsg, setemailValidationMsg] = useState(""); 
+  const [email,setemail] = useState("");
 
-  const checkPassword = (str) =>
-{
-    var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    return re.test(str)
-}
-  
-  const [oldPassword,setOldPassword] = useState("");
-  const [newPassword,setNewPassword] = useState("");
-  const [confirmPassword,setConfirmPassword] = useState("");
-
-
-  const isOldPasswordValid = () =>{
+  const isemailValid = () =>{
     
-    var user = firebase.auth().currentUser;
-    var credential = firebase.auth.EmailAuthProvider.credential(
-      firebase.auth().currentUser.email,
-      oldPassword
-    );
-            
-    user.reauthenticateWithCredential(credential).then(function() {
-      setOldPasswordIsValid(true)
-    }).catch(function(error) {
-      // An error happened.
-    });
+    firebase.auth().signInWithEmailAndPassword(email, " ").catch(function(error) {
+      if(error.code === "auth/wrong-password") {
+          setemailIsValid(true)
+      } else if(error.code === "auth/user-not-found"){
+          setemailIsValid(false)
+      }
+  });
         
     }
-
-  const isNewPasswordValid = text =>{
-    if(!checkPassword(text)) return false
-    else return true
-  }
-
-  const isConfirmPasswordValid = text =>{
-    if(confirmPassword!=newPassword ) return false
-    else return true
-  }
-
 
   const reg = async() =>{
-    if(!oldPasswordValid || !newPasswordValid || !confirmPasswordValid ){
-      if(!isOldPasswordValid(oldPassword)){
-        setOldPasswordIsValid(false)
-        setOldPasswordValidationMsg("Old password is incorrect")
+    if(!emailValid ){
+      if(!isemailValid(email)){
+        setemailIsValid(false)
+        setemailValidationMsg("Email is incorrect or not registereed")
     }
       else {
-        setOldPasswordValidationMsg("")
-        setOldPasswordIsValid(true)
+        setemailValidationMsg("")
+        setemailIsValid(true)
         
       }
-      if(!isNewPasswordValid(newPassword)){
-        setNewPasswordIsValid(false);
-        setNewPasswordValidationMsg("Check new password")
-    }
-      else {
-        setNewPasswordValidationMsg("")
-        setNewPasswordIsValid(true)
-        
-      }
-      if(!isConfirmPasswordValid(confirmPassword)){
-        setConfirmPasswordIsValid(false);
-        setConfirmPasswordValidationMsg("Confirm Password doesn't match")
-    }
-      else {
-        setConfirmPasswordValidationMsg("")
-        setConfirmPasswordIsValid(true)
-        
-      }
-    
+      
      
 
     }else{
       try {
-        var user = firebase.auth().currentUser; 
-        user.updatePassword(newPassword).then(function() {
-          Alert.alert("Password Changed")
-          navigation.push('ChangePassword')
+    
+        var auth = firebase.auth();
+        var emailAddress = email;
+        
+        auth.sendPasswordResetEmail(emailAddress).then(function() {
+         Alert.alert("Email Sent")
         }).catch(function(error) {
-          var errorMessage = error.message
-          Alert.alert(errorMessage)
-        }); 
+          // An error happened.
+        });
 
       } catch (error) {
         var errorMessage = error.message
@@ -115,22 +65,11 @@ const Serviceproviderreg = ({navigation}) => {
    } } >
      
     <SafeAreaView style={styles.container}>
-      <TextInput style={styles.nameinput} placeholder=" Enter old Password"
+      <TextInput style={styles.nameinput} placeholder=" Enter your registered Email"
           numberOfLines={1}
-          onChangeText={text => setOldPassword(text)}>
+          onChangeText={text => setemail(text)}>
         </TextInput>
-        {!oldPasswordValid && <Text style={{marginLeft:25,color:'red'}}>{oldPasswordValidationMsg}</Text>}
-      <TextInput style={styles.phoneinput} placeholder=" Enter new Password"
-          numberOfLines={1}
-          onChangeText={text => setNewPassword(text)}
-          keyboardType='numeric'>
-        </TextInput>
-        {!newPasswordValid && <Text style={{marginLeft:25,color:'red'}}>{newPasswordValidationMsg}</Text>}
-      <TextInput style={styles.cityinput} placeholder=" Enter Confirm Password"
-          numberOfLines={1}
-          onChangeText={text => setConfirmPassword(text)}>
-      </TextInput>
-      {!confirmPasswordValid && <Text style={{marginLeft:25,color:'red'}}>{confirmPasswordValidationMsg}</Text>}
+        {!emailValid && <Text style={{marginLeft:25,color:'red'}}>{emailValidationMsg}</Text>}
       <MaterialButtonLight disable={false} style={styles.materialButtonLight} click={reg}>
     <Text style={styles.caption}>Change</Text></MaterialButtonLight>    
       </SafeAreaView>
@@ -189,7 +128,7 @@ const styles = StyleSheet.create({
     width: 322,
     height: 53,
     backgroundColor: "rgba(255,255,255,1)",
-    marginTop: 15,
+    marginTop: 155,
     marginLeft: 27
   },
   enterName: {

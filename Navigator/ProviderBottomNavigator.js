@@ -33,7 +33,7 @@ export function MyProviderTabs  (){
           <Ionicons name="list-outline" size={32} color="black" />
         ),
     }}/>
-      <Tab1.Screen name="MyAccount" component={MyAccountProvider} options={{
+      <Tab1.Screen name="MyAccountProvider" component={MyAccountProvider} options={{
         tabBarLabel:(tabInfo)=>{
             return<View>
                 <Text style={{fontSize:12,textAlign:'center'}}>Account</Text>

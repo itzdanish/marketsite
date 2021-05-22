@@ -36,7 +36,7 @@ export function MyTabs() {
           <MaterialCommunityIcons name="clipboard-list-outline" size={32} color="black" />
         ),
     }}/>
-      <Tab.Screen name="MyAccount" component={MyAccountScreen} options={{
+      <Tab.Screen name="MyAccountSeeker" component={MyAccountScreen} options={{
         tabBarLabel:(tabInfo)=>{
             return<View>
                 <Text style={{fontSize:12,textAlign:'center'}}>Account</Text>

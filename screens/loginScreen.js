@@ -22,7 +22,7 @@ const Login = ({navigation}) => {
 
     const pressy =
     ()=>{
-      setIsSecureEntry((prev) => !prev);
+      setIsSecureEntry((prev) => !prev);b
     }
 
      const [selectedUser, setSelectedUser] = useState();
@@ -176,7 +176,7 @@ const Login = ({navigation}) => {
      {!passwordIsValid && <Text style={{marginLeft:88,color:'red'}}>{passwordValidationMsg}</Text>} 
       </View>
       <Text style={{color: "rgba(196,196,196,1)",fontSize: 16,marginTop: 4,marginLeft: 140}} onPress={() => {
-            navigation.navigate('Changepassword');
+            navigation.navigate('ForgotPassword');
           }}>Forgot Password</Text>
       <Text style={styles.bottomline}>Don't have an account?</Text>
       <Text style={styles.Register} onPress={() => {

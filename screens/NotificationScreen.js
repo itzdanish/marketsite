@@ -60,7 +60,7 @@ const NotificationScreens = ({navigation}) =>{
   return (
     <SafeAreaView style={styles.container}>
     <FlatList
-    keyExtractor={(item) => item.notification_id}
+    keyExtractor={(item) => item.notication_id}
     data={booking} 
     renderItem={renderGridItem} 
     /></SafeAreaView>

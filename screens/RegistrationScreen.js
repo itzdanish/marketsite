@@ -104,6 +104,19 @@ const RegistrationScreen = ({navigation}) => {
               address:"",
               City:"",
             })
+            db.collection("notifications").doc(email).collection(email).add({
+              email:email,
+              msg:"Account Created",
+              dateTime:firebase.firestore.Timestamp.fromDate(new Date()),
+              notication_id:"",
+            }).then(function (doc) {
+              var notication_id = doc.id;
+             
+              db.collection("notifications").doc(email).collection(email).doc(notication_id).update({
+                notication_id: doc.id,
+              })
+              
+            })
           }
           navigation.navigate('Login'); 
           

@@ -53,7 +53,6 @@ const Serviceproviderreg = ({navigation}) => {
 
   const reg = () =>{
     if(!nameValid || !phoneValid || !dobValid || !addressValid ){
-      Alert.alert("Check Input added")
       if(!isPhoneValid(phone)){
         setphoneIsValid(false);
         setphoneValidationMsg("Please enter a valid phone number");

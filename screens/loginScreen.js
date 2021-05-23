@@ -22,7 +22,7 @@ const Login = ({navigation}) => {
 
     const pressy =
     ()=>{
-      setIsSecureEntry((prev) => !prev);b
+      setIsSecureEntry((prev) => !prev);
     }
 
      const [selectedUser, setSelectedUser] = useState();

@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import MaterialButtonLight from "../components/MaterialButtonLight";
+import * as firebase from 'firebase';
+import db from "../config";
 
 const Bookingdone=({route,navigation}) => {
   const reg = () => {

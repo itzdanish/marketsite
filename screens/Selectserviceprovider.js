@@ -89,9 +89,9 @@ const CustomRatingBar =()=>{
 
   const CategoryId = route.params.CategoryId;
   
-  const selectedCategory = CATEGORIES.find(cat => cat.title === CategoryId);
+  const selectedCategory = CATEGORIES.find(cat => cat.title === CategoryId );
  
-   const displayProvider = listing.filter(list => list.category_type.indexOf(CategoryId) >= 0);
+   const displayProvider = listing.filter(list => list.category_type.indexOf(CategoryId) >= 0 && list.idStatus==="Verified");
   return (
     <View style={styles.container}>
       <FlatList data={displayProvider} keyExtractor={(item, index) => item.serviceprovider_id} renderItem={renderListing}>   

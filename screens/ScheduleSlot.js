@@ -122,6 +122,19 @@ const ScheduleSlot = ({ route, navigation }) => {
           Booking_id: booking_id
         });
 
+        db.collection("notifications").doc(email).collection(email).add({
+          email:email,
+          msg:"Booking Done",
+          dateTime:firebase.firestore.Timestamp.fromDate(new Date()),
+          notication_id:"",
+        }).then(function (doc) {
+          var notication_id = doc.id;
+         
+          db.collection("notifications").doc(email).collection(email).doc(notication_id).update({
+            notication_id: doc.id,
+          })
+          
+        })
 
 
         db.collection("service").doc(serviceprovider_email).collection(serviceprovider_email).add({

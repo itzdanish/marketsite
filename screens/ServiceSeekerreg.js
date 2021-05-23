@@ -89,7 +89,6 @@ const ServiceSeekerrreg = ({navigation}) => {
         setAddressIsValid(true);
         
       }
-      Alert.alert("Check Input added")
     }else{
       try {
         const email=firebase.auth().currentUser.email;             
